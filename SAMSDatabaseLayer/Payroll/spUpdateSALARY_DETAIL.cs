@@ -1,0 +1,618 @@
+using System;
+using System.Data;
+using SAMSCommon.Classes;
+using SAMSDataAccessLayer.Classes;
+
+namespace SAMSDatabaseLayer.Classes
+{
+	public class spUpdateSALARY_DETAIL
+	{
+		#region Private Members
+		private string sp_Name = "spUpdateSALARY_DETAIL" ;
+		private IDbConnection m_connection;
+		private IDbTransaction m_transaction;
+		private int m_LOCATION_ID;
+		private int m_DEPARTMENT_ID;
+		private int m_TYPE_ID;
+		private int m_BONUS_TYPE_ID;
+		private int m_EmployeeID;
+		private int m_STATUS_ID;
+		private int m_USER_ID;
+		private int m_WORK_DATES;
+		private int m_OUTSIDE_HOURS;
+		private int m_VISITS;
+		private decimal m_BASIC_SALARY;
+		private decimal m_ALLOWNCES;
+		private decimal m_DEDUCTIONS;
+		private decimal m_FINE;
+		private bool m_IS_DELETED;
+		private long m_SALARY_DETAIL_ID;
+        private string m_REMARKS;
+        private bool m_IsProcess;
+		#endregion
+		#region Public Properties
+		public int LOCATION_ID
+		{
+			set
+			{
+				m_LOCATION_ID = value ;
+			}
+			get
+			{
+				return m_LOCATION_ID;
+			}
+		}
+		public int DEPARTMENT_ID
+		{
+			set
+			{
+				m_DEPARTMENT_ID = value ;
+			}
+			get
+			{
+				return m_DEPARTMENT_ID;
+			}
+		}
+		public int TYPE_ID
+		{
+			set
+			{
+				m_TYPE_ID = value ;
+			}
+			get
+			{
+				return m_TYPE_ID;
+			}
+		}
+		public int BONUS_TYPE_ID
+		{
+			set
+			{
+				m_BONUS_TYPE_ID = value ;
+			}
+			get
+			{
+				return m_BONUS_TYPE_ID;
+			}
+		}
+		public int EmployeeID
+		{
+			set
+			{
+				m_EmployeeID = value ;
+			}
+			get
+			{
+				return m_EmployeeID;
+			}
+		}
+		public int STATUS_ID
+		{
+			set
+			{
+				m_STATUS_ID = value ;
+			}
+			get
+			{
+				return m_STATUS_ID;
+			}
+		}
+		public int USER_ID
+		{
+			set
+			{
+				m_USER_ID = value ;
+			}
+			get
+			{
+				return m_USER_ID;
+			}
+		}
+		public int WORK_DATES
+		{
+			set
+			{
+				m_WORK_DATES = value ;
+			}
+			get
+			{
+				return m_WORK_DATES;
+			}
+		}
+		public int OUTSIDE_HOURS
+		{
+			set
+			{
+				m_OUTSIDE_HOURS = value ;
+			}
+			get
+			{
+				return m_OUTSIDE_HOURS;
+			}
+		}
+		public int VISITS
+		{
+			set
+			{
+				m_VISITS = value ;
+			}
+			get
+			{
+				return m_VISITS;
+			}
+		}
+		public decimal  BASIC_SALARY
+		{
+			set
+			{
+				m_BASIC_SALARY = value ;
+			}
+			get
+			{
+				return m_BASIC_SALARY;
+			}
+		}
+		public decimal  ALLOWNCES
+		{
+			set
+			{
+				m_ALLOWNCES = value ;
+			}
+			get
+			{
+				return m_ALLOWNCES;
+			}
+		}
+		public decimal  DEDUCTIONS
+		{
+			set
+			{
+				m_DEDUCTIONS = value ;
+			}
+			get
+			{
+				return m_DEDUCTIONS;
+			}
+		}
+		public decimal  FINE
+		{
+			set
+			{
+				m_FINE = value ;
+			}
+			get
+			{
+				return m_FINE;
+			}
+		}
+		public bool IS_DELETED
+		{
+			set
+			{
+				m_IS_DELETED = value ;
+			}
+			get
+			{
+				return m_IS_DELETED;
+			}
+		}
+		public long SALARY_DETAIL_ID
+		{
+			set
+			{
+				m_SALARY_DETAIL_ID = value ;
+			}
+			get
+			{
+				return m_SALARY_DETAIL_ID;
+			}
+		}
+        public string REMARKS
+        {
+            set { m_REMARKS = value; }
+            get { return m_REMARKS; }
+        }
+        public bool IsProcess
+        {
+            set { m_IsProcess = value; }
+            get { return m_IsProcess; }
+        }
+
+
+		public IDbConnection  Connection
+		{
+			set
+			{
+				m_connection = value;
+			}
+			get
+			{
+				return m_connection;
+			}
+		}
+		public IDbTransaction  Transaction
+		{
+			set
+			{
+				m_transaction = value;
+			}
+			get
+			{
+				return m_transaction;
+			}
+		}
+		#endregion
+		#region Constructor
+		public spUpdateSALARY_DETAIL()
+		{
+		}
+		#endregion
+		#region public Methods
+		public bool  ExecuteQuery()
+		{
+			try
+			{
+			    IDbCommand cmd = ProviderFactory.GetCommand(EnumProviders.SQLClient);
+				cmd.CommandType =  CommandType.StoredProcedure;
+				cmd.CommandText = sp_Name;
+				cmd.Connection =   m_connection;
+				if(m_transaction!=null)
+				{
+					cmd.Transaction = m_transaction;
+				}
+				GetParameterCollection(ref cmd);
+				cmd.ExecuteNonQuery();
+				return true;
+			}
+			catch(Exception e)
+			{
+				throw e;
+			}
+			finally
+			{
+			}
+		}
+		public IDataReader ExecuteReader()
+		{
+			try
+			{
+				IDbCommand command = ProviderFactory.GetCommand(EnumProviders.SQLClient);
+				command.CommandType = CommandType.StoredProcedure;
+				command.CommandText = sp_Name;
+				command.Connection = m_connection;
+				if(m_transaction!=null)
+				{
+					command.Transaction = m_transaction;
+				}
+				GetParameterCollection(ref command);
+				IDataReader dr = command.ExecuteReader();
+				return dr;
+			}
+			catch(Exception exp)
+			{
+				throw exp;
+			}
+			finally
+			{
+			}
+		}
+		public DataTable ExecuteTable()
+		{
+			try
+			{
+				IDbCommand command = ProviderFactory.GetCommand(EnumProviders.SQLClient);
+				command.CommandType = CommandType.StoredProcedure;
+				command.CommandText = sp_Name;
+				command.Connection = m_connection;
+				if(m_transaction!=null)
+				{
+					command.Transaction = m_transaction;
+				}
+				GetParameterCollection(ref command);
+				IDbDataAdapter da = ProviderFactory.GetAdapter(EnumProviders.SQLClient);
+				da.SelectCommand = command;
+				DataSet ds = new DataSet();
+				da.Fill(ds);
+				return ds.Tables[0];
+			}
+			catch(Exception exp)
+			{
+				throw exp;
+			}
+			finally
+			{
+			}
+		}
+		public string ExecuteScalar()
+		{
+			try
+			{
+				IDbCommand command = ProviderFactory.GetCommand(EnumProviders.SQLClient);
+				command.CommandType = CommandType.StoredProcedure;
+				command.CommandText = sp_Name;
+				command.Connection = m_connection;
+				if(m_transaction!=null)
+				{
+					command.Transaction = m_transaction;
+				}
+				GetParameterCollection(ref command);
+				object o;
+				o = command.ExecuteScalar();
+
+
+				return o.ToString();
+			}
+			catch(Exception exp)
+			{
+				throw exp;
+			}
+			finally
+			{
+			}
+		}
+		public void FirstReader(IDataReader dr)
+		{
+			if(dr.Read())
+			{
+				m_LOCATION_ID= Convert.ToInt32(dr["LOCATION_ID"]);
+				m_DEPARTMENT_ID= Convert.ToInt32(dr["DEPARTMENT_ID"]);
+				m_TYPE_ID= Convert.ToInt32(dr["TYPE_ID"]);
+				m_BONUS_TYPE_ID= Convert.ToInt32(dr["BONUS_TYPE_ID"]);
+				m_EmployeeID= Convert.ToInt32(dr["EmployeeID"]);
+				m_STATUS_ID= Convert.ToInt32(dr["STATUS_ID"]);
+				m_USER_ID= Convert.ToInt32(dr["USER_ID"]);
+				m_WORK_DATES= Convert.ToInt32(dr["WORK_DATES"]);
+				m_OUTSIDE_HOURS= Convert.ToInt32(dr["OUTSIDE_HOURS"]);
+				m_VISITS= Convert.ToInt32(dr["VISITS"]);
+				m_BASIC_SALARY= Convert.ToDecimal(dr["BASIC_SALARY"]);
+				m_ALLOWNCES= Convert.ToDecimal(dr["ALLOWNCES"]);
+				m_DEDUCTIONS= Convert.ToDecimal(dr["DEDUCTIONS"]);
+				m_FINE= Convert.ToDecimal(dr["FINE"]);
+				m_IS_DELETED=Convert.ToBoolean(dr["IS_DELETED"]);
+				m_SALARY_DETAIL_ID=Convert.ToInt64(dr["SALARY_DETAIL_ID"]);
+			}
+		}
+		public void GetParameterCollection(ref IDbCommand cmd)
+		{
+			IDataParameterCollection pparams = cmd.Parameters;
+			IDataParameter parameter ;
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@LOCATION_ID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_LOCATION_ID==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_LOCATION_ID;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@DEPARTMENT_ID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_DEPARTMENT_ID==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_DEPARTMENT_ID;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@TYPE_ID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_TYPE_ID==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_TYPE_ID;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@BONUS_TYPE_ID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_BONUS_TYPE_ID==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_BONUS_TYPE_ID;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@EmployeeID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_EmployeeID==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_EmployeeID;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@STATUS_ID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_STATUS_ID==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_STATUS_ID;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@USER_ID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_USER_ID==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_USER_ID;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@WORK_DATES" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_WORK_DATES==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_WORK_DATES;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@OUTSIDE_HOURS" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_OUTSIDE_HOURS==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_OUTSIDE_HOURS;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@VISITS" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_VISITS==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_VISITS;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@BASIC_SALARY" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Money);
+			if(m_BASIC_SALARY==Constants.DecimalNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_BASIC_SALARY;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@ALLOWNCES" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Money);
+			if(m_ALLOWNCES==Constants.DecimalNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_ALLOWNCES;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@DEDUCTIONS" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Money);
+			if(m_DEDUCTIONS==Constants.DecimalNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_DEDUCTIONS;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@FINE" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Money);
+			if(m_FINE==Constants.DecimalNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_FINE;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@IS_DELETED" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Bit);
+				parameter.Value = m_IS_DELETED;
+			pparams.Add(parameter);
+
+            parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+            parameter.ParameterName = "@REMARKS";
+            parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.VarChar);
+            if (m_REMARKS == null)
+            {
+                parameter.Value = DBNull.Value;
+            }
+            else
+            {
+                parameter.Value = m_REMARKS;
+            }
+            pparams.Add(parameter);
+
+            parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+            parameter.ParameterName = "@IsProcess";
+            parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Bit);
+            parameter.Value = m_IsProcess;
+            pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@SALARY_DETAIL_ID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.BigInt);
+			if(m_SALARY_DETAIL_ID==Constants.LongNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_SALARY_DETAIL_ID;
+			}
+			pparams.Add(parameter);
+
+
+		}
+		#endregion
+	}
+}

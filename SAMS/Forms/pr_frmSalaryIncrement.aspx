@@ -1,0 +1,381 @@
+<%@ Page Language="C#" MasterPageFile="~/Forms/PageMaster.master" AutoEventWireup="true"
+    CodeFile="pr_frmSalaryIncrement.aspx.cs" Inherits="pr_frmSalaryIncrement" Title="Salary Increment" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Register Src="~/Forms/UserControl/MultiCheckCombo.ascx" TagName="MultiCheckCombo"
+    TagPrefix="uc1" %>
+<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="cphPage">
+    <style>
+        .customerSerch input
+        {
+            -moz-box-shadow: inset 0 0 6px #333;
+            -webkit-box-shadow: inset 0 0 6px #333;
+            box-shadow: inset 0 0 6px #333;
+            -moz-border-radius: 3px;
+            height: 26px;
+            float: left;
+            padding-left: 5px;
+            border: none;
+            color: #666;
+            margin-top: 10px;
+            margin-left: 10px;
+            border-radius: 3px;
+        }
+        .customerSerch
+        {
+            clear: both;
+        }
+        .style2
+        {
+            width: 31%;
+        }
+        .style3
+        {
+            width: 7px;
+        }
+        .style4
+        {
+            width: 129px;
+        }
+        .style5
+        {
+            width: 110px;
+        }
+    </style>
+    <script language="JavaScript" type="text/javascript">
+
+        function pageLoad() {
+
+            //find the current popup
+            var popUp = $find('ModelPopup');
+
+            //check it exists so the script won't fail
+            if (popUp) {
+                //Add the function below as the event
+                popUp.add_hidden(HidePopupPanel);
+            }
+        }
+
+        function HidePopupPanel(source, args) {
+            //find the panel associated with the extender
+            objPanel = document.getElementById(source._PopupControlID);
+
+            //check the panel exists
+            if (objPanel) {
+                //set the display attribute, so it remains hidden on postback
+                objPanel.style.display = 'none';
+            }
+        }
+
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        //Raised before processing of an asynchronous postback starts and the postback request is sent to the server.
+        prm.add_beginRequest(BeginRequestHandler);
+        // Raised after an asynchronous postback is finished and control has been returned to the browser.
+        prm.add_endRequest(EndRequestHandler);
+        function BeginRequestHandler(sender, args) {
+            //Shows the modal popup - the update progress
+            var popup = $find('<%= modalPopup.ClientID %>');
+            if (popup != null) {
+                popup.show();
+            }
+        }
+
+        function EndRequestHandler(sender, args) {
+            //Hide the modal popup - the update progress
+            var popup = $find('<%= modalPopup.ClientID %>');
+            if (popup != null) {
+                popup.hide();
+            }
+        }
+
+    </script>
+    <asp:UpdatePanel ID="UpdatePanel12" runat="server">
+        <ContentTemplate>
+            <div id="right_data">
+                <div>
+                    <asp:UpdateProgress ID="UpdateProgress" runat="server">
+                        <ProgressTemplate>
+                            <asp:ImageButton ID="ImageButton10" runat="server" Height="28px" ImageUrl="~/App_Themes/Granite/Images/image003.gif"
+                                Width="31px" />
+                        </ProgressTemplate>
+                    </asp:UpdateProgress>
+                    <cc1:ModalPopupExtender ID="modalPopup" runat="server" TargetControlID="UpdateProgress"
+                        PopupControlID="UpdateProgress" BackgroundCssClass="modalBackground">
+                    </cc1:ModalPopupExtender>
+                </div>
+                <asp:Panel ID="pnlAdvanceContent" runat="server">
+                    <table width="100%">
+                        <tr>
+                            <td width="5px">
+                            </td>
+                            <td>
+                                <table width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td width="10%">
+                                                <asp:Label ID="Label3" runat="server" Text="Location" Width="105px"></asp:Label>
+                                            </td>
+                                            <td class="style2">
+                                                <asp:DropDownList ID="ddlLocation" OnSelectedIndexChanged="ddlLocation_SelectedIndexChanged"
+                                                    AutoPostBack="true" runat="server" Width="203px">
+                                                </asp:DropDownList>
+                                            </td>
+                                            <td width="10%">
+                                                <asp:Label ID="Label1" runat="server" Text="Department"></asp:Label>
+                                            </td>
+                                            <td width="50%">
+                                                <asp:DropDownList ID="ddlDepartment" OnSelectedIndexChanged="ddlDepartment_Change"
+                                                    AutoPostBack="true" runat="server" Width="203px">
+                                                </asp:DropDownList>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="10%">
+                                                <asp:Label ID="Label5" runat="server" Text="Employee"></asp:Label>
+                                            </td>
+                                            <td class="style2">
+                                                <asp:DropDownList ID="ddlEmployee" runat="server" Width="203px">
+                                                </asp:DropDownList>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr />
+                    <table width="100%">
+                        <tr>
+                            <td class="style3">
+                                <asp:HiddenField ID="hdnIncrementID" runat="server" />
+                            </td>
+                            <td>
+                                <table width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td class="style5">
+                                                <asp:Label ID="Label4" runat="server" Text="Previous Salary" Width="95px"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtPreviousSalary" runat="server" Width="200px"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td class="style5">
+                                                <asp:Label ID="Label6" runat="server" Text="Increment Amount" Width="99px" 
+                                                    Height="16px"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtIncrement" runat="server" Width="200px"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td class="style5">
+                                                <asp:Label ID="Label7" runat="server" Text="New Salary" Width="94px"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="txtNewSalary" runat="server" Width="200px"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td class="style5">
+                                                <asp:Label ID="Label8" runat="server" Text="Increment Date" Width="94px"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <cc1:CalendarExtender ID="txtIncrementDate_CalendarExtender" runat="server" TargetControlID="txtIncrementDate"
+                                                    PopupButtonID="txtIncrementDate" Format="dd-MMM-yyyy">
+                                                </cc1:CalendarExtender>
+                                                <asp:TextBox ID="txtIncrementDate" runat="server" Width="200px"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td class="style5">
+                                                <asp:Label ID="Label9" runat="server" Text="Applicable Date" Width="97px"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <cc1:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="txtApplicableDate"
+                                                    PopupButtonID="txtApplicableDate" Format="dd-MMM-yyyy">
+                                                </cc1:CalendarExtender>
+                                                <asp:TextBox ID="txtApplicableDate" runat="server" Width="200px"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td class="style5">
+                                                <asp:Label ID="Label2" runat="server" Text="Remarks" Width="92px"></asp:Label>
+                                            </td>
+                                            <td width="30%">
+                                                <asp:TextBox ID="txtRemarks" runat="server" TextMode="MultiLine" Width="473px" Height="50px"></asp:TextBox>
+                                            </td>
+                                            <td width="10%">
+                                            </td>
+                                            <td width="50%">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                    </table>
+                    <table style="margin-top: 10px;">
+                        <tr>
+                            <td width="5px">
+                            </td>
+                            <td>
+                                <asp:LinkButton ID="btnSave" runat="server" OnClick="btnSave_Click">
+                                    <asp:Image ID="imgAdvance" runat="server" ImageUrl="../images/btn-save.png" />
+                                </asp:LinkButton>
+                                <asp:LinkButton ID="btnDisCard" runat="server" OnClick="btnDisCard_Click">Discard</asp:LinkButton>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+                </asp:Panel>
+                <asp:Panel ID="pnlAdvanceGrid" runat="server">
+                    <asp:LinkButton ID="btnShowpnAdvanceContent" OnClick="btnShowpnAdvanceContent_Click"
+                        runat="server">Add New Increment</asp:LinkButton>
+                    <asp:Repeater ID="rptAdvance" runat="server" OnItemCommand="rptAdvance_ItemCommand">
+                        <HeaderTemplate>
+                            <table width="100%" style="margin-top: 10px;">
+                                <thead>
+                                    <tr class="tblheading">
+                                        <td width="20%">
+                                            Employee
+                                        </td>
+                                        <td width="10%">
+                                            Department
+                                        </td>
+                                        <td width="15%">
+                                            Location
+                                        </td>
+                                        <td width="15%">
+                                            Previous Salary
+                                        </td>
+                                        <td width="10%">
+                                            Increment
+                                        </td>
+                                        <td width="10%">
+                                            New Salary
+                                        </td>
+                                        <td width="10%">
+                                            Increment Date
+                                        </td>
+                                        <td width="20%">
+                                            Applicable Date
+                                        </td>
+                                        <td width="15%" colspan="2">
+                                            Action
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody id="table1">
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                            <tr>
+                                <td>
+                                    <%# Eval("User_Name")%>
+                                </td>
+                                <td>
+                                    <%# Eval("DepartmentName")%>
+                                </td>
+                                <td>
+                                    <%# Eval("distributor_name")%>
+                                </td>
+                                <td>
+                                    <%# Eval("PREVIOUS_SALARY")%>
+                                    <%--previous salary --%>
+                                </td>
+                                <td>
+                                    <%# Eval("INCREMENT_AMOUNT")%>
+                                    <%-- increment --%>
+                                </td>
+                                <td>
+                                    <%# Eval("NEW_SALARY")%>
+                                    <%--new salary --%>
+                                </td>
+                                <td>
+                                   <%# DataBinder.Eval(Container.DataItem, "INCREMENT_DATE", "{0:dd-MM-yyyy}")%>
+                                </td>
+                                <td>
+                                    <%# DataBinder.Eval(Container.DataItem, "APPLICABLE_DATE", "{0:dd-MM-yyyy}")%>
+                                </td>
+                                <td>
+                                    <asp:LinkButton ID="btnEditAssets" CommandArgument='<%# Eval("INCREMENT_ID")%>'
+                                        CommandName="edit" runat="server" ClientIDMode="AutoID">
+                                    Edit
+                                    </asp:LinkButton>
+                                </td>
+                                <td>
+                                    <asp:LinkButton ID="btnDeleteAssets" CommandName="delete" CommandArgument='<%# Eval("INCREMENT_ID")%>'
+                                        runat="server" ClientIDMode="AutoID" OnClientClick="javascript:return confirm('Are you sure you want to Delete?');return false;">
+                                            Delete
+                                    </asp:LinkButton>
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                        <AlternatingItemTemplate>
+                            <tr style="background-color: #E4E4E4">
+                                
+                                <td>
+                                    <%# Eval("User_Name")%>
+                                </td>
+                                <td>
+                                    <%# Eval("DepartmentName")%>
+                                </td>
+                                <td>
+                                    <%# Eval("distributor_name")%>
+                                </td>
+                                <td>
+                                    <%# Eval("PREVIOUS_SALARY")%>
+                                    <%--previous salary --%>
+                                </td>
+                                <td>
+                                    <%# Eval("INCREMENT_AMOUNT")%>
+                                    <%-- increment --%>
+                                </td>
+                                <td>
+                                    <%# Eval("NEW_SALARY")%>
+                                    <%--new salary --%>
+                                </td>
+                              <td>
+                                   <%# DataBinder.Eval(Container.DataItem, "INCREMENT_DATE", "{0:dd-MM-yyyy}")%>
+                                </td>
+                                <td>
+                                    <%# DataBinder.Eval(Container.DataItem, "APPLICABLE_DATE", "{0:dd-MM-yyyy}")%>
+                                </td>
+                                <td>
+                                    <asp:LinkButton ID="btnEditAssets" CommandArgument='<%# Eval("INCREMENT_ID")%>'
+                                        CommandName="edit" runat="server" ClientIDMode="AutoID">
+                                    Edit
+                                    </asp:LinkButton>
+                                </td>
+                                <td>
+                                    <asp:LinkButton ID="btnDeleteAssets" CommandName="delete" CommandArgument='<%# Eval("INCREMENT_ID")%>'
+                                        runat="server" ClientIDMode="AutoID" OnClientClick="javascript:return confirm('Are you sure you want to Delete?');return false;">
+                                            Delete
+                                    </asp:LinkButton>
+                                </td>
+                                                           </tr>
+                        </AlternatingItemTemplate>
+                        <FooterTemplate>
+                            </tbody> </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
+                </asp:Panel>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>

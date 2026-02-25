@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppSettings>
+
+  <Server>DESKTOP-Q07NSGI\SQLEXPRESS</Server>
+  <DBName>AdamsTest</DBName>
+  <DBUser>sa</DBUser>
+  <DBPassword>Fast1234</DBPassword>
+  <DBAuthentication>Windows</DBAuthentication>
+
+</AppSettings>

@@ -1,0 +1,340 @@
+using System;
+using System.Data;
+using SAMSCommon.Classes;
+using SAMSDataAccessLayer.Classes;
+
+namespace SAMSDatabaseLayer.Classes
+{
+	public class spInsertWorkHoursException
+	{
+		#region Private Members
+		private string sp_Name = "spInsertWorkHoursException" ;
+		private IDbConnection m_connection;
+		private IDbTransaction m_transaction;
+		private int m_CompanyID;
+		private int m_ExceptionTypeID;
+		private decimal m_NumberOfHours;
+		private int m_User_ID;
+		private int m_ExceptionID;
+		private DateTime m_Document_Date;
+		private string m_ExceptionDescription;
+		#endregion
+		#region Public Properties
+		public int CompanyID
+		{
+			set
+			{
+				m_CompanyID = value ;
+			}
+			get
+			{
+				return m_CompanyID;
+			}
+		}
+		public int ExceptionTypeID
+		{
+			set
+			{
+				m_ExceptionTypeID = value ;
+			}
+			get
+			{
+				return m_ExceptionTypeID;
+			}
+		}
+		public decimal NumberOfHours
+		{
+			set
+			{
+				m_NumberOfHours = value ;
+			}
+			get
+			{
+				return m_NumberOfHours;
+			}
+		}
+		public int User_ID
+		{
+			set
+			{
+				m_User_ID = value ;
+			}
+			get
+			{
+				return m_User_ID;
+			}
+		}
+		public int ExceptionID
+		{
+			get
+			{
+				return m_ExceptionID;
+			}
+		}
+		public DateTime Document_Date
+		{
+			set
+			{
+				m_Document_Date = value ;
+			}
+			get
+			{
+				return m_Document_Date;
+			}
+		}
+		public  string ExceptionDescription
+		{
+			set
+			{
+				m_ExceptionDescription = value ;
+			}
+			get
+			{
+				return m_ExceptionDescription;
+			}
+		}
+
+
+		public IDbConnection  Connection
+		{
+			set
+			{
+				m_connection = value;
+			}
+			get
+			{
+				return m_connection;
+			}
+		}
+		public IDbTransaction  Transaction
+		{
+			set
+			{
+				m_transaction = value;
+			}
+			get
+			{
+				return m_transaction;
+			}
+		}
+		#endregion
+		#region Constructor
+		public spInsertWorkHoursException()
+		{
+		}
+		#endregion
+		#region public Methods
+		public int  ExecuteQuery()
+		{
+            try
+            {
+                IDbCommand cmd = ProviderFactory.GetCommand(EnumProviders.SQLClient);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = sp_Name;
+                cmd.Connection = m_connection;
+                if (m_transaction != null)
+                {
+                    cmd.Transaction = m_transaction;
+                }
+                GetParameterCollection(ref cmd);
+                cmd.ExecuteNonQuery();
+                return m_ExceptionID = (int)((IDataParameter)(cmd.Parameters["@ExceptionID"])).Value;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+			finally
+			{
+			}
+		}
+		public IDataReader ExecuteReader()
+		{
+			try
+			{
+				IDbCommand command = ProviderFactory.GetCommand(EnumProviders.SQLClient);
+				command.CommandType = CommandType.StoredProcedure;
+				command.CommandText = sp_Name;
+				command.Connection = m_connection;
+				if(m_transaction!=null)
+				{
+					command.Transaction = m_transaction;
+				}
+				GetParameterCollection(ref command);
+				IDataReader dr = command.ExecuteReader();
+				return dr;
+			}
+			catch(Exception exp)
+			{
+				throw exp;
+			}
+			finally
+			{
+			}
+		}
+		public DataTable ExecuteTable()
+		{
+			try
+			{
+				IDbCommand command = ProviderFactory.GetCommand(EnumProviders.SQLClient);
+				command.CommandType = CommandType.StoredProcedure;
+				command.CommandText = sp_Name;
+				command.Connection = m_connection;
+				if(m_transaction!=null)
+				{
+					command.Transaction = m_transaction;
+				}
+				GetParameterCollection(ref command);
+				IDbDataAdapter da = ProviderFactory.GetAdapter(EnumProviders.SQLClient);
+				da.SelectCommand = command;
+				DataSet ds = new DataSet();
+				da.Fill(ds);
+				return ds.Tables[0];
+			}
+			catch(Exception exp)
+			{
+				throw exp;
+			}
+			finally
+			{
+			}
+		}
+		public string ExecuteScalar()
+		{
+			try
+			{
+				IDbCommand command = ProviderFactory.GetCommand(EnumProviders.SQLClient);
+				command.CommandType = CommandType.StoredProcedure;
+				command.CommandText = sp_Name;
+				command.Connection = m_connection;
+				if(m_transaction!=null)
+				{
+					command.Transaction = m_transaction;
+				}
+				GetParameterCollection(ref command);
+				object o;
+				o = command.ExecuteScalar();
+
+
+				return o.ToString();
+			}
+			catch(Exception exp)
+			{
+				throw exp;
+			}
+			finally
+			{
+			}
+		}
+		public void FirstReader(IDataReader dr)
+		{
+			if(dr.Read())
+			{
+				m_CompanyID= Convert.ToInt32(dr["CompanyID"]);
+				m_ExceptionTypeID= Convert.ToInt32(dr["ExceptionTypeID"]);
+				m_NumberOfHours= Convert.ToInt32(dr["NumberOfHours"]);
+				m_User_ID= Convert.ToInt32(dr["User_ID"]);
+				m_ExceptionID= Convert.ToInt32(dr["ExceptionID"]);
+				m_Document_Date= Convert.ToDateTime(dr["Document_Date"]);
+				m_ExceptionDescription= Convert.ToString(dr["ExceptionDescription"]);
+			}
+		}
+		public void GetParameterCollection(ref IDbCommand cmd)
+		{
+			IDataParameterCollection pparams = cmd.Parameters;
+			IDataParameter parameter ;
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@CompanyID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_CompanyID==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_CompanyID;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@ExceptionTypeID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_ExceptionTypeID==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_ExceptionTypeID;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@NumberOfHours" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Decimal);
+			if(m_NumberOfHours==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_NumberOfHours;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@User_ID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			if(m_User_ID==Constants.IntNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_User_ID;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@ExceptionID" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+			parameter.Direction = ParameterDirection.Output;
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@Document_Date" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.DateTime);
+			if(m_Document_Date==Constants.DateNullValue)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_Document_Date;
+			}
+			pparams.Add(parameter);
+
+
+			parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+			parameter.ParameterName = "@ExceptionDescription" ; 
+			parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.VarChar);
+			if(m_ExceptionDescription== null)
+			{
+				parameter.Value = DBNull.Value;
+			}
+			else
+			{
+				parameter.Value = m_ExceptionDescription;
+			}
+			pparams.Add(parameter);
+
+
+		}
+		#endregion
+	}
+}
