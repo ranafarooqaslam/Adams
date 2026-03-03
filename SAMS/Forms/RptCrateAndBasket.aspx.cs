@@ -35,7 +35,8 @@ public partial class Forms_RptCrateAndBasket : System.Web.UI.Page
     {
         DistributorController DController = new DistributorController();
         DataTable dt = DController.SelectDistributorInfo(Constants.IntNullValue, int.Parse(this.Session["UserId"].ToString()), int.Parse(this.Session["CompanyId"].ToString()));
-        clsWebFormUtil.FillDropDownList(this.drpDistributor, dt, 0, 2, true);
+        drpDistributor.Items.Add(new ListItem("All", Constants.IntNullValue.ToString()));
+        clsWebFormUtil.FillDropDownList(this.drpDistributor, dt, 0, 2);
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
@@ -58,25 +59,24 @@ public partial class Forms_RptCrateAndBasket : System.Web.UI.Page
             DataTable dt = DPrint.SelectReportTitle(int.Parse(drpDistributor.SelectedValue.ToString()));
 
             DataControl dc = new DataControl();
-            DataTable result = mController.SelectLocationWiseAssetDetail(
-                int.Parse(drpDistributor.SelectedValue.ToString()), DateTime.Parse(txtDate.Text), 0, "");
-            foreach (DataRow dr in result.Rows)
-            {
-                ds.Tables["RptLocationWiseAssetDetail"].ImportRow(dr);
-            }
+            DataSet result = mController.SelectCratesAndBasetRpt(
+                int.Parse(drpDistributor.SelectedValue.ToString()), DateTime.Parse(txtStartDate.Text), 0,
+                DateTime.Parse(txtDate.Text));
 
             ReportDocument CrpReport = new ReportDocument();
             
-            CrpReport = new SAMSBusinessLayer.Reports.CrpAssetDetailLocationWise();
+            CrpReport = new SAMSBusinessLayer.Reports.CrpCratesAndBasketSummary();
            
             CrpReport.SetDataSource(ds);
             CrpReport.Refresh();
 
 
-            CrpReport.SetParameterValue("DocumentType", "Location Wise Asset Detail");
+            CrpReport.SetParameterValue("DocumentType", "Crates & Basket Summary");
             CrpReport.SetParameterValue("CompanyName", dt.Rows[0]["COMPANY_NAME"].ToString());
-            CrpReport.SetParameterValue("Date", txtDate.Text);
+            CrpReport.SetParameterValue("Date", txtStartDate.Text);
+            CrpReport.SetParameterValue("EndDate", txtDate.Text);
             CrpReport.SetParameterValue("Location", drpDistributor.SelectedItem.Text);
+            CrpReport.SetParameterValue("UserName", Session["UserName"].ToString());
 
             Session.Add("CrpReport", CrpReport);
             Session.Add("ReportType", Type);

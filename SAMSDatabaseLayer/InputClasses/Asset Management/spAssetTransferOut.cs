@@ -30,6 +30,8 @@ namespace SAMSDatabaseLayer.Classes
         private DateTime m_Damage_Date;
         #endregion
         #region Public Properties
+        public DateTime FROM_DATE { get; set; }
+        public DateTime TO_DATE { get; set; }
         public long ASSET_STOCK_ID
         {
             set
@@ -498,6 +500,33 @@ namespace SAMSDatabaseLayer.Classes
                     command.Transaction = m_transaction;
                 }
                 GetParameterCollectionForAssetDetailByLocation(ref command);
+                IDbDataAdapter da = ProviderFactory.GetAdapter(EnumProviders.SQLClient);
+                da.SelectCommand = command;
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                return ds.Tables[0];
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+            finally
+            {
+            }
+        }
+        public DataTable ExecuteTableForCratesAndBasketRpt()
+        {
+            try
+            {
+                IDbCommand command = ProviderFactory.GetCommand(EnumProviders.SQLClient);
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "RptCratesAndBasket";
+                command.Connection = m_connection;
+                if (m_transaction != null)
+                {
+                    command.Transaction = m_transaction;
+                }
+                GetParameterCollectionForCratesAndBasketRpt(ref command);
                 IDbDataAdapter da = ProviderFactory.GetAdapter(EnumProviders.SQLClient);
                 da.SelectCommand = command;
                 DataSet ds = new DataSet();
@@ -1137,6 +1166,71 @@ namespace SAMSDatabaseLayer.Classes
                 parameter.Value = m_Remarks;
             }
             pparams.Add(parameter);
+        }
+        public void GetParameterCollectionForCratesAndBasketRpt(ref IDbCommand cmd)
+        {
+            IDataParameterCollection pparams = cmd.Parameters;
+            IDataParameter parameter;
+
+            parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+            parameter.ParameterName = "@FROM_LOCATION";
+            parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+            if (m_FROM_LOCATION == Constants.IntNullValue)
+            {
+                parameter.Value = DBNull.Value;
+            }
+            else
+            {
+                parameter.Value = m_FROM_LOCATION;
+            }
+            pparams.Add(parameter);
+
+
+
+
+            parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+            parameter.ParameterName = "@fromDate";
+            parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.DateTime);
+            if (FROM_DATE == Constants.DateNullValue)
+            {
+                parameter.Value = DBNull.Value;
+            }
+            else
+            {
+                parameter.Value = FROM_DATE;
+            }
+            pparams.Add(parameter);
+
+
+
+            parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+            parameter.ParameterName = "@ToDate";
+            parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.DateTime);
+            if (TO_DATE == Constants.DateNullValue)
+            {
+                parameter.Value = DBNull.Value;
+            }
+            else
+            {
+                parameter.Value = TO_DATE;
+            }
+            pparams.Add(parameter);
+
+
+
+            parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+            parameter.ParameterName = "@TYPE_ID";
+            parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+            if (m_TYPE_ID == Constants.IntNullValue)
+            {
+                parameter.Value = DBNull.Value;
+            }
+            else
+            {
+                parameter.Value = m_TYPE_ID;
+            }
+            pparams.Add(parameter);
+
         }
         #endregion
     }

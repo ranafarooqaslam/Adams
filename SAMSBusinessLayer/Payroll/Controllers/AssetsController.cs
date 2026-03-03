@@ -924,5 +924,39 @@ namespace SAMSBusinessLayer.Classes
                 }
             }
         }
+        public DataSet SelectCratesAndBasetRpt(int p_toLocation, DateTime p_fromDate, int p_typeId, DateTime p_toDate)
+        {
+            IDbConnection mConnection = null;
+            try
+            {
+                mConnection = ProviderFactory.GetConnection(Configuration.ConnectionString, EnumProviders.SQLClient);
+                mConnection.Open();
+                SAMSBusinessLayer.Reports.DsReport2 ds = new SAMSBusinessLayer.Reports.DsReport2();
+                spAssetTransferOut mPurchaseMaster = new spAssetTransferOut();
+                mPurchaseMaster.Connection = mConnection;
+                mPurchaseMaster.FROM_LOCATION = p_toLocation;
+                mPurchaseMaster.FROM_DATE = p_fromDate;
+                mPurchaseMaster.TYPE_ID = p_typeId;
+                mPurchaseMaster.TO_DATE = p_toDate;
+                DataTable dt = mPurchaseMaster.ExecuteTableForCratesAndBasketRpt();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    ds.Tables["RptCratesAndBasket"].ImportRow(dr);
+                }
+                return ds;
+            }
+            catch (Exception exp)
+            {
+                ExceptionPublisher.PublishException(exp);
+                return null;
+            }
+            finally
+            {
+                if (mConnection != null && mConnection.State == ConnectionState.Open)
+                {
+                    mConnection.Close();
+                }
+            }
+        }
     }
 }

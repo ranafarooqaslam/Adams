@@ -1,5 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/Forms/PageMaster.master" AutoEventWireup="true"
-    CodeFile="RptCrateAndBasket.aspx.cs" Inherits="Forms_RptCrateAndBasket" Title="SAMS :: Crates And Basket" %>
+<%@ Page Language="C#" MasterPageFile="~/Forms/PageMaster.master" AutoEventWireup="true" CodeFile="RptCrateAndBasket.aspx.cs" Inherits="Forms_RptCrateAndBasket" Title="SAMS :: Crates And Basket" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="cphPage">
