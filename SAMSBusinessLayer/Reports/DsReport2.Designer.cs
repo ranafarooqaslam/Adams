@@ -17686,8 +17686,6 @@ namespace SAMSBusinessLayer.Reports {
                 base.Columns.Add(this.columnQtyTransferOutFromWarehouse);
                 this.columnQtyReceivedByDistributor = new global::System.Data.DataColumn("QtyReceivedByDistributor", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnQtyReceivedByDistributor);
-                this.columnWarehouseName.MaxLength = 100;
-                this.columnDistributorName.MaxLength = 100;
                 this.columnCategoryName.AllowDBNull = false;
                 this.columnCategoryName.MaxLength = 50;
                 this.columnQtyTransferOutFromWarehouse.ReadOnly = true;

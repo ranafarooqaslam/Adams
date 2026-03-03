@@ -55,10 +55,8 @@ public partial class Forms_RptCrateAndBasket : System.Web.UI.Page
             DocumentPrintController DPrint = new DocumentPrintController();
             AssetsController RptInventoryCtl = new AssetsController();
 
-            SAMSBusinessLayer.Reports.DsReport2 ds = new SAMSBusinessLayer.Reports.DsReport2();
             DataTable dt = DPrint.SelectReportTitle(int.Parse(drpDistributor.SelectedValue.ToString()));
 
-            DataControl dc = new DataControl();
             DataSet result = mController.SelectCratesAndBasetRpt(
                 int.Parse(drpDistributor.SelectedValue.ToString()), DateTime.Parse(txtStartDate.Text), 0,
                 DateTime.Parse(txtDate.Text));
@@ -67,7 +65,7 @@ public partial class Forms_RptCrateAndBasket : System.Web.UI.Page
             
             CrpReport = new SAMSBusinessLayer.Reports.CrpCratesAndBasketSummary();
            
-            CrpReport.SetDataSource(ds);
+            CrpReport.SetDataSource(result);
             CrpReport.Refresh();
 
 
@@ -81,12 +79,12 @@ public partial class Forms_RptCrateAndBasket : System.Web.UI.Page
             Session.Add("CrpReport", CrpReport);
             Session.Add("ReportType", Type);
             const string url = "'Default.aspx'";
-            //const string script = "<script language='JavaScript' type='text/javascript'> window.open(" + url + ",\"Link\",\"toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,width=800,height=600,left=10,top=10\");</script>";
-            //Type cstype = this.GetType();
-            //ClientScriptManager cs = Page.ClientScript;
-            //cs.RegisterStartupScript(cstype, "OpenWindow", script);
+            const string script = "<script language='JavaScript' type='text/javascript'> window.open(" + url + ",\"Link\",\"toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,width=800,height=600,left=10,top=10\");</script>";
+            Type cstype = this.GetType();
+            ClientScriptManager cs = Page.ClientScript;
+            cs.RegisterStartupScript(cstype, "OpenWindow", script);
 
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "openpage", "window.open(" + url + ",\"Link\",\"toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,width=800,height=600,left=10,top=10\");", true);
+            //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "openpage", "window.open(" + url + ",\"Link\",\"toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,width=800,height=600,left=10,top=10\");", true);
         }
         catch (Exception ex)
         {
