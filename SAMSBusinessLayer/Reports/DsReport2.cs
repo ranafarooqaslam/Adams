@@ -4,6 +4,10 @@
 
     public partial class DsReport2
     {
+        partial class RptCratesAndBasketDataTable
+        {
+        }
+
         partial class RptLoadPass2DataTable
         {
         }

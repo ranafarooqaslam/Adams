@@ -57,19 +57,31 @@ public partial class Forms_RptCrateAndBasket : System.Web.UI.Page
 
             DataTable dt = DPrint.SelectReportTitle(int.Parse(drpDistributor.SelectedValue.ToString()));
 
-            DataSet result = mController.SelectCratesAndBasetRpt(
-                int.Parse(drpDistributor.SelectedValue.ToString()), DateTime.Parse(txtStartDate.Text), 0,
+            DataSet result = mController.SelectCratesAndBasetRpt(int.Parse(drpDistributor.SelectedValue.ToString()),
+                DateTime.Parse(txtStartDate.Text), int.Parse(drpDocumentType.SelectedValue),
                 DateTime.Parse(txtDate.Text));
 
             ReportDocument CrpReport = new ReportDocument();
-            
-            CrpReport = new SAMSBusinessLayer.Reports.CrpCratesAndBasketSummary();
-           
+            if (drpDocumentType.SelectedValue == "1")
+            {
+                CrpReport = new SAMSBusinessLayer.Reports.CrpCratesAndBasketSummary();
+            }
+            else if (drpDocumentType.SelectedValue == "0")
+            {
+                CrpReport = new SAMSBusinessLayer.Reports.CrpCratesAndBasketLedger();
+            }
+
             CrpReport.SetDataSource(result);
             CrpReport.Refresh();
 
-
-            CrpReport.SetParameterValue("DocumentType", "Crates & Basket Summary");
+            if (drpDocumentType.SelectedValue == "1")
+            {
+                CrpReport.SetParameterValue("DocumentType", "Crates & Basket Summary");
+            }
+            else if (drpDocumentType.SelectedValue == "0")
+            {
+                CrpReport.SetParameterValue("DocumentType", "Crates & Basket Ledger");
+            }
             CrpReport.SetParameterValue("CompanyName", dt.Rows[0]["COMPANY_NAME"].ToString());
             CrpReport.SetParameterValue("Date", txtStartDate.Text);
             CrpReport.SetParameterValue("EndDate", txtDate.Text);

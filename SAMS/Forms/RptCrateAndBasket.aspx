@@ -79,6 +79,19 @@
                             <ContentTemplate>
                                 <table>
                                     <tbody>
+                                        <tr>
+                                            <td align="left">
+                                                <strong>
+                                                <asp:Label ID="Label2" runat="server" Width="94px" Text="Document Type" CssClass="lblbox"></asp:Label></strong>
+                                            </td>
+                                            <td style="width: 238px; height: 25px" align="left">
+                                                <asp:DropDownList ID="drpDocumentType" runat="server" Width="200px" AutoPostBack="true"
+                                                     CssClass="DropList">
+                                                <asp:ListItem Text="Ledger" Value="0"></asp:ListItem>
+                                                <asp:ListItem Text="Summary" Value="1"></asp:ListItem>
+                                                </asp:DropDownList>
+                                            </td>
+                                        </tr>
                                          <tr runat="server" id="locRow">
                                             <td align="left">
                                                 <strong>

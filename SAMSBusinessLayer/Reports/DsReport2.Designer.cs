@@ -17520,6 +17520,18 @@ namespace SAMSBusinessLayer.Reports {
             
             private global::System.Data.DataColumn columnQtyReceivedByDistributor;
             
+            private global::System.Data.DataColumn columnOpeningBalance;
+            
+            private global::System.Data.DataColumn columnDOC_NO;
+            
+            private global::System.Data.DataColumn columnDOCUMENT_DATE;
+            
+            private global::System.Data.DataColumn columnQtyTransferOut;
+            
+            private global::System.Data.DataColumn columnQtyTransferIn;
+            
+            private global::System.Data.DataColumn columnClosingBalance;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public RptCratesAndBasketDataTable() {
@@ -17595,6 +17607,54 @@ namespace SAMSBusinessLayer.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn OpeningBalanceColumn {
+                get {
+                    return this.columnOpeningBalance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DOC_NOColumn {
+                get {
+                    return this.columnDOC_NO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DOCUMENT_DATEColumn {
+                get {
+                    return this.columnDOCUMENT_DATE;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn QtyTransferOutColumn {
+                get {
+                    return this.columnQtyTransferOut;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn QtyTransferInColumn {
+                get {
+                    return this.columnQtyTransferIn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ClosingBalanceColumn {
+                get {
+                    return this.columnClosingBalance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -17630,14 +17690,20 @@ namespace SAMSBusinessLayer.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public RptCratesAndBasketRow AddRptCratesAndBasketRow(string WarehouseName, string DistributorName, string CategoryName, decimal QtyTransferOutFromWarehouse, decimal QtyReceivedByDistributor) {
+            public RptCratesAndBasketRow AddRptCratesAndBasketRow(string WarehouseName, string DistributorName, string CategoryName, decimal QtyTransferOutFromWarehouse, decimal QtyReceivedByDistributor, decimal OpeningBalance, string DOC_NO, System.DateTime DOCUMENT_DATE, decimal QtyTransferOut, decimal QtyTransferIn, decimal ClosingBalance) {
                 RptCratesAndBasketRow rowRptCratesAndBasketRow = ((RptCratesAndBasketRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         WarehouseName,
                         DistributorName,
                         CategoryName,
                         QtyTransferOutFromWarehouse,
-                        QtyReceivedByDistributor};
+                        QtyReceivedByDistributor,
+                        OpeningBalance,
+                        DOC_NO,
+                        DOCUMENT_DATE,
+                        QtyTransferOut,
+                        QtyTransferIn,
+                        ClosingBalance};
                 rowRptCratesAndBasketRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowRptCratesAndBasketRow);
                 return rowRptCratesAndBasketRow;
@@ -17671,6 +17737,12 @@ namespace SAMSBusinessLayer.Reports {
                 this.columnCategoryName = base.Columns["CategoryName"];
                 this.columnQtyTransferOutFromWarehouse = base.Columns["QtyTransferOutFromWarehouse"];
                 this.columnQtyReceivedByDistributor = base.Columns["QtyReceivedByDistributor"];
+                this.columnOpeningBalance = base.Columns["OpeningBalance"];
+                this.columnDOC_NO = base.Columns["DOC_NO"];
+                this.columnDOCUMENT_DATE = base.Columns["DOCUMENT_DATE"];
+                this.columnQtyTransferOut = base.Columns["QtyTransferOut"];
+                this.columnQtyTransferIn = base.Columns["QtyTransferIn"];
+                this.columnClosingBalance = base.Columns["ClosingBalance"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17686,6 +17758,18 @@ namespace SAMSBusinessLayer.Reports {
                 base.Columns.Add(this.columnQtyTransferOutFromWarehouse);
                 this.columnQtyReceivedByDistributor = new global::System.Data.DataColumn("QtyReceivedByDistributor", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnQtyReceivedByDistributor);
+                this.columnOpeningBalance = new global::System.Data.DataColumn("OpeningBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnOpeningBalance);
+                this.columnDOC_NO = new global::System.Data.DataColumn("DOC_NO", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDOC_NO);
+                this.columnDOCUMENT_DATE = new global::System.Data.DataColumn("DOCUMENT_DATE", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDOCUMENT_DATE);
+                this.columnQtyTransferOut = new global::System.Data.DataColumn("QtyTransferOut", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnQtyTransferOut);
+                this.columnQtyTransferIn = new global::System.Data.DataColumn("QtyTransferIn", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnQtyTransferIn);
+                this.columnClosingBalance = new global::System.Data.DataColumn("ClosingBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnClosingBalance);
                 this.columnCategoryName.AllowDBNull = false;
                 this.columnCategoryName.MaxLength = 50;
                 this.columnQtyTransferOutFromWarehouse.ReadOnly = true;
@@ -29883,6 +29967,102 @@ namespace SAMSBusinessLayer.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal OpeningBalance {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableRptCratesAndBasket.OpeningBalanceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'OpeningBalance\' in table \'RptCratesAndBasket\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableRptCratesAndBasket.OpeningBalanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string DOC_NO {
+                get {
+                    try {
+                        return ((string)(this[this.tableRptCratesAndBasket.DOC_NOColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DOC_NO\' in table \'RptCratesAndBasket\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableRptCratesAndBasket.DOC_NOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime DOCUMENT_DATE {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableRptCratesAndBasket.DOCUMENT_DATEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DOCUMENT_DATE\' in table \'RptCratesAndBasket\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableRptCratesAndBasket.DOCUMENT_DATEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal QtyTransferOut {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableRptCratesAndBasket.QtyTransferOutColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'QtyTransferOut\' in table \'RptCratesAndBasket\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableRptCratesAndBasket.QtyTransferOutColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal QtyTransferIn {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableRptCratesAndBasket.QtyTransferInColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'QtyTransferIn\' in table \'RptCratesAndBasket\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableRptCratesAndBasket.QtyTransferInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal ClosingBalance {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableRptCratesAndBasket.ClosingBalanceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ClosingBalance\' in table \'RptCratesAndBasket\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableRptCratesAndBasket.ClosingBalanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsWarehouseNameNull() {
                 return this.IsNull(this.tableRptCratesAndBasket.WarehouseNameColumn);
             }
@@ -29927,6 +30107,78 @@ namespace SAMSBusinessLayer.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetQtyReceivedByDistributorNull() {
                 this[this.tableRptCratesAndBasket.QtyReceivedByDistributorColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsOpeningBalanceNull() {
+                return this.IsNull(this.tableRptCratesAndBasket.OpeningBalanceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetOpeningBalanceNull() {
+                this[this.tableRptCratesAndBasket.OpeningBalanceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDOC_NONull() {
+                return this.IsNull(this.tableRptCratesAndBasket.DOC_NOColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDOC_NONull() {
+                this[this.tableRptCratesAndBasket.DOC_NOColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDOCUMENT_DATENull() {
+                return this.IsNull(this.tableRptCratesAndBasket.DOCUMENT_DATEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDOCUMENT_DATENull() {
+                this[this.tableRptCratesAndBasket.DOCUMENT_DATEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsQtyTransferOutNull() {
+                return this.IsNull(this.tableRptCratesAndBasket.QtyTransferOutColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetQtyTransferOutNull() {
+                this[this.tableRptCratesAndBasket.QtyTransferOutColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsQtyTransferInNull() {
+                return this.IsNull(this.tableRptCratesAndBasket.QtyTransferInColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetQtyTransferInNull() {
+                this[this.tableRptCratesAndBasket.QtyTransferInColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsClosingBalanceNull() {
+                return this.IsNull(this.tableRptCratesAndBasket.ClosingBalanceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetClosingBalanceNull() {
+                this[this.tableRptCratesAndBasket.ClosingBalanceColumn] = global::System.Convert.DBNull;
             }
         }
         

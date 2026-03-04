@@ -225,6 +225,12 @@
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Reports\CrpCratesAndBasketLedger.cs">
+      <DependentUpon>CrpCratesAndBasketLedger.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reports\CrpCratesAndBasketSummary.cs">
       <DependentUpon>CrpCratesAndBasketSummary.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1552,6 +1558,10 @@
     <EmbeddedResource Include="Reports\CrpAssetDetail.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrpAssetDetail.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CrpCratesAndBasketLedger.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrpCratesAndBasketLedger.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\CrpCratesAndBasketSummary.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
