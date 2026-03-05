@@ -1,0 +1,46 @@
+<xml version>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+ <Styles>
+ <Style ss:ID="Default" ss:Name="Normal">
+ <Alignment ss:Vertical="Bottom" ss:Horizontal="Left"/>
+ <Borders/>
+ <Font/>
+ <Interior/>
+ <NumberFormat/>
+ <Protection/>
+ </Style>
+ <Style ss:ID="BoldColumn">
+ <Font x:family="Swiss" ss:Bold="1"/>
+ </Style>
+ <Style ss:ID="StringLiteral">
+ <Alignment ss:Vertical="Bottom" ss:Horizontal="Left"/>
+ <NumberFormat ss:Format="@"/>
+ </Style>
+ <Style ss:ID="Decimal">
+ <Alignment ss:Vertical="Bottom" ss:Horizontal="Right"/>
+ <NumberFormat ss:Format="0.00"/>
+ </Style>
+ <Style ss:ID="Integer">
+ <Alignment ss:Vertical="Bottom" ss:Horizontal="Right"/>
+ <NumberFormat ss:Format="0"/>
+ </Style>
+ <Style ss:ID="DateLiteral">
+ <NumberFormat ss:Format="dd-mmm-yyyy;@"/>
+ </Style>
+ <Style ss:ID="SubtotalStyle">
+ <Alignment ss:Vertical="Bottom" ss:Horizontal="Right"/>
+ <Font x:family="Swiss" ss:Bold="1"/>
+ <NumberFormat ss:Format="0"/>
+ <Interior ss:Color="#c0c0c0" ss:Pattern="Solid"/>
+ </Style>
+ <Style ss:ID="GrandTotalStyle">
+ <Alignment ss:Vertical="Bottom" ss:Horizontal="Right"/>
+ <Font x:family="Swiss" ss:Bold="1"/>
+ <NumberFormat ss:Format="0"/>
+ <Interior ss:Color="#c0c0c0" ss:Pattern="Solid"/>
+ </Style>
+ </Styles>
+ <Worksheet ss:Name="Crates And Basket Summary"><Table><Row ss:Height="18"><Cell ss:StyleID="BoldColumn"><Data ss:Type="String">Crates And Basket Summary</Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="BoldColumn"><Data ss:Type="String">From Date: 01-Jan-2025</Data></Cell></Row><Row ss:Height="18"><Cell ss:StyleID="BoldColumn"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="BoldColumn"><Data ss:Type="String">To Date: 26-Feb-2026</Data></Cell></Row><Row><Cell ss:StyleID="BoldColumn"><Data ss:Type="String">From Location</Data></Cell><Cell ss:StyleID="BoldColumn"><Data ss:Type="String">To Location</Data></Cell><Cell ss:StyleID="BoldColumn"><Data ss:Type="String">Category</Data></Cell><Cell ss:StyleID="BoldColumn"><Data ss:Type="String">Sent</Data></Cell><Cell ss:StyleID="BoldColumn"><Data ss:Type="String">Received</Data></Cell><Cell ss:StyleID="BoldColumn"><Data ss:Type="String"> Balance</Data></Cell></Row><Row><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Lahore</Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Sahiwal</Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Baskets</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">1000.00</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">500.00</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">500.00</Data></Cell></Row><Row><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Lahore</Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Sahiwal</Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Crates</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">0.00</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">500.00</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">-500.00</Data></Cell></Row><Row><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Sahiwal</Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Lahore</Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Baskets</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">500.00</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">1000.00</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">-500.00</Data></Cell></Row><Row><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Sahiwal</Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Lahore</Data></Cell><Cell ss:StyleID="StringLiteral"><Data ss:Type="String">Crates</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">500.00</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">0.00</Data></Cell><Cell ss:StyleID="Decimal"><Data ss:Type="String">500.00</Data></Cell></Row></Table> </Worksheet></Workbook>
