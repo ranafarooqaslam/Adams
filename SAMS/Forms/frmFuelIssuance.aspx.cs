@@ -30,9 +30,9 @@ public partial class Forms_frmFuelIssuance : System.Web.UI.Page
             LoadPrincipal();
             LoadAccountDetail();
             LoadVehicleNO();
-            LoadDeliveryman();
             SelectFuelPurchaseDetail();
             LoadGridView();
+            DrpVehicleNo_SelectedIndexChanged(null, null);
            btnSaveDocument.Attributes.Add("onclick", "return ValidateForm();");
         }
     }
@@ -277,8 +277,14 @@ public partial class Forms_frmFuelIssuance : System.Web.UI.Page
     
     protected void DrpVehicleNo_SelectedIndexChanged(object sender, EventArgs e)
     {
+        lblLastReading.Text = "";
         this.LoadDeliveryman();
-
+        DataTable dtMaxVehicleReading = mController.GetMaxVehicleReading(Convert.ToInt32(DrpVehicleNo.SelectedValue), Convert.ToDateTime(txtToDate.Text), 0);
+        if (dtMaxVehicleReading.Rows.Count > 0)
+        {
+            decimal MaxReading = Convert.ToDecimal(dtMaxVehicleReading.Rows[0][0]);
+            lblLastReading.Text = MaxReading.ToString();
+        }
     }
     
     protected void Grdfuel_SelectedIndexChanged(object sender, EventArgs e)

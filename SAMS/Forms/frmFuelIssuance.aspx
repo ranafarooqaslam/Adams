@@ -346,6 +346,18 @@
                                         <asp:TextBox ID="txtRate" runat="server" CssClass="txtBox" Width="195px" onkeyup="return CalculateAmount(event);"
                                             onkeydown="return jsDecimals(event);" ReadOnly="true"></asp:TextBox>
                                     </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <asp:Label ID="Label10" runat="server" Height="14px" Text="Last Reading:" ForeColor="Red" Width="98px"></asp:Label>
+                                        </strong>
+                                    </td>
+                                    <td>
+                                         <strong>
+                                        <asp:Label Style="margin-left: -15px;" ID="lblLastReading" runat="server" ForeColor="Red" Height="14px" Text="" Width="98px"></asp:Label>
+                                             </strong>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td style="height: 30px;">
