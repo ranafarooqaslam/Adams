@@ -195,9 +195,37 @@ namespace SAMSDatabaseLayer.Classes
 
 			}
 		}
+        public DataTable ExecuteTable1()
+        {
+            try
+            {
+                IDbCommand command = ProviderFactory.GetCommand(EnumProviders.SQLClient);
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "uspSelectDistributorInfo1";
+                command.Connection = m_connection;
+                if (m_transaction != null)
+                {
+                    command.Transaction = m_transaction;
+                }
+                GetParameterCollection1(ref command);
+                IDbDataAdapter da = ProviderFactory.GetAdapter(EnumProviders.SQLClient);
+                da.SelectCommand = command;
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                return ds.Tables[0];
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+            finally
+            {
 
 
-		public string ExecuteScalar()
+            }
+        }
+
+        public string ExecuteScalar()
 		{
 			try
 			{
@@ -299,6 +327,67 @@ namespace SAMSDatabaseLayer.Classes
 
 
 		}
-		#endregion
-	}
+        public void GetParameterCollection1(ref IDbCommand cmd)
+        {
+            IDataParameterCollection pparams = cmd.Parameters;
+            IDataParameter parameter;
+            parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+            parameter.ParameterName = "@COMPANY_ID";
+            parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+            if (m_COMPANY_ID == Constants.IntNullValue)
+            {
+                parameter.Value = DBNull.Value;
+            }
+            else
+            {
+                parameter.Value = m_COMPANY_ID;
+            }
+            pparams.Add(parameter);
+
+
+            parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+            parameter.ParameterName = "@DISTRIBUTOR_ID";
+            parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+            if (m_DISTRIBUTOR_ID == Constants.IntNullValue)
+            {
+                parameter.Value = DBNull.Value;
+            }
+            else
+            {
+                parameter.Value = m_DISTRIBUTOR_ID;
+            }
+            pparams.Add(parameter);
+
+
+            parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+            parameter.ParameterName = "@USER_ID";
+            parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+            if (m_USER_ID == Constants.IntNullValue)
+            {
+                parameter.Value = DBNull.Value;
+            }
+            else
+            {
+                parameter.Value = m_USER_ID;
+            }
+            pparams.Add(parameter);
+
+
+            parameter = ProviderFactory.GetParameter(EnumProviders.SQLClient);
+            parameter.ParameterName = "@DISTRIBUTOR_TYPE";
+            parameter.DbType = ProviderFactory.GetDBType(EnumProviders.SQLClient, EnumDBTypes.Int);
+            if (m_DISTRIBUTOR_TYPE == Constants.IntNullValue)
+            {
+                parameter.Value = DBNull.Value;
+            }
+            else
+            {
+                parameter.Value = m_DISTRIBUTOR_TYPE;
+            }
+            pparams.Add(parameter);
+
+
+        }
+        #endregion
+    }
 }

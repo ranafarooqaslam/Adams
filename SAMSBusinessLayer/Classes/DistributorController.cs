@@ -127,7 +127,37 @@ namespace SAMSBusinessLayer.Classes
 		}
 
 
+        public DataTable SelectDistributorInfo1(int p_Distributor_ID, int p_User_Id, int Companyid)
+        {
+            IDbConnection mConnection = null;
+            try
+            {
+                mConnection = ProviderFactory.GetConnection(Configuration.ConnectionString, EnumProviders.SQLClient);
+                mConnection.Open();
+                uspSelectDistributorInfo mDistributorInfo = new uspSelectDistributorInfo();
+                mDistributorInfo.Connection = mConnection;
+                mDistributorInfo.DISTRIBUTOR_ID = p_Distributor_ID;
+                mDistributorInfo.USER_ID = p_User_Id;
+                mDistributorInfo.COMPANY_ID = Companyid;
 
+                DataTable dt = mDistributorInfo.ExecuteTable1();
+                return dt;
+
+            }
+            catch (Exception exp)
+            {
+                ExceptionPublisher.PublishException(exp);
+                return null;
+            }
+            finally
+            {
+                if (mConnection != null && mConnection.State == ConnectionState.Open)
+                {
+                    mConnection.Close();
+                }
+            }
+
+        }
         public DataTable SelectFaultReason(int p_Fault_ID, int p_User_Id)
         {
             IDbConnection mConnection = null;
