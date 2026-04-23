@@ -67,7 +67,7 @@ public partial class Forms_frmAssetTransferOutCrates : System.Web.UI.Page
         DataTable dt = DController.SelectDistributorInfo(Constants.IntNullValue, int.Parse(this.Session["UserId"].ToString()), int.Parse(this.Session["CompanyId"].ToString()));
         DataTable dt1 = DController.SelectDistributorInfo1(Constants.IntNullValue, int.Parse(this.Session["UserId"].ToString()), int.Parse(this.Session["CompanyId"].ToString()));
         clsWebFormUtil.FillDropDownList(this.drpDistributor, dt1, 0, 2, true);
-        Session.Add("dtLocationInfo", dt);
+        Session.Add("dtLocationInfo", dt1);
 
         LoadAssignedDistributorToWareHouse();
     }
