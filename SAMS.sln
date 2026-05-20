@@ -69,28 +69,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		VisualSVNWorkingCopyRoot = .
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://fastservices.visualstudio.com/
-		SccLocalPath0 = .
-		SccWebProject1 = true
-		SccProjectUniqueName1 = SAMS
-		SccProjectName1 = SAMS
-		SccLocalPath1 = SAMS
-		SccProjectEnlistmentChoice1 = 2
-		SccProjectUniqueName2 = SAMSBusinessLayer\\SAMSBusinessLayer.csproj
-		SccProjectName2 = SAMSBusinessLayer
-		SccLocalPath2 = SAMSBusinessLayer
-		SccProjectUniqueName3 = SAMSCommon\\SAMSCommon.csproj
-		SccProjectName3 = SAMSCommon
-		SccLocalPath3 = SAMSCommon
-		SccProjectUniqueName4 = SAMSDataAccessLayer\\SAMSDataAccessLayer.csproj
-		SccProjectName4 = SAMSDataAccessLayer
-		SccLocalPath4 = SAMSDataAccessLayer
-		SccProjectUniqueName5 = SAMSDatabaseLayer\\SAMSDatabaseLayer.csproj
-		SccProjectName5 = SAMSDatabaseLayer
-		SccLocalPath5 = SAMSDatabaseLayer
-	EndGlobalSection
+	EndGlobalSection	
 EndGlobal
