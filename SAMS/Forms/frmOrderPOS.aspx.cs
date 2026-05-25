@@ -417,7 +417,7 @@ public partial class Forms_frmOrderPOS : System.Web.UI.Page
                 {
                     long CustomerID = SaveNewCustomer(distributerId, currentWorkDate, NewCustomerNam, NewCustomerContactNumber);
 
-                    DistWiseId = OrderEntryController.Add_Invoice2(distributerId, manualId2, 0,
+                    DistWiseId = OrderEntryController.Add_Invoice2(distributerId, manualId2, 1,
                         CustomerID, CustomerID, 0, Convert.ToInt32(saleForce), 0,
                         decimal.Parse(_dc.chkNull_0(amountDue)), decimal.Parse(_dc.chkNull_0(discount)),
                         decimal.Parse(_dc.chkNull_0(paidIn)), decimal.Parse(_dc.chkNull_0(Gst)),
