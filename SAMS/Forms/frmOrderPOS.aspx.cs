@@ -455,7 +455,7 @@ public partial class Forms_frmOrderPOS : System.Web.UI.Page
                         DistWiseId = mOrderController.Add_SaleReturn(
                             distributerId,
                             0, int.Parse(payType),
-                            0,
+                            1,
                             long.Parse(customerId),
                             long.Parse(customerId),
                             0,
