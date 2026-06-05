@@ -1184,11 +1184,273 @@ namespace SAMSBusinessLayer.Classes
 
 
 
-           public DataTable ConvertOrder_to_Invoice(int p_Distributor_Id, string p_MANUAL_ORDER_ID, long p_Customer_Id, int p_Principal_Id,
-            long p_SaleOrder_Id, DateTime p_Document_Date, decimal p_GrossSale, decimal p_Discount, decimal p_scheme,
-            decimal p_GstAmt, decimal p_Net_Amount, int p_OrderStatus, int p_OrderTypeId, int p_UserId, 
-            string p_PayeesName, int p_ChannelType_ID, string p_Customer_Name, string p_SalePerson, 
-            decimal p_advanceTax)
+        //   public DataTable ConvertOrder_to_Invoice(int p_Distributor_Id, string p_MANUAL_ORDER_ID, long p_Customer_Id, int p_Principal_Id,
+        //    long p_SaleOrder_Id, DateTime p_Document_Date, decimal p_GrossSale, decimal p_Discount, decimal p_scheme,
+        //    decimal p_GstAmt, decimal p_Net_Amount, int p_OrderStatus, int p_OrderTypeId, int p_UserId, 
+        //    string p_PayeesName, int p_ChannelType_ID, string p_Customer_Name, string p_SalePerson, 
+        //    decimal p_advanceTax)
+        //{
+        //    #region variables
+        //    IDbTransaction mTransaction = null;
+        //    IDbConnection mConnection = null;
+        //    #endregion
+
+        //    try
+        //    {
+        //        mConnection = ProviderFactory.GetConnection(Configuration.ConnectionString, EnumProviders.SQLClient);
+        //        mConnection.Open();
+        //        UspConvertOrdertoInvoice mOrder = new UspConvertOrdertoInvoice();
+        //        mTransaction = ProviderFactory.GetTransaction(mConnection);
+        //        mOrder.Connection = mConnection;
+        //        mOrder.Transaction = mTransaction;
+        //        mOrder.DISTRIBUTOR_ID = p_Distributor_Id;
+        //        mOrder.PRINCIPAL_ID = p_Principal_Id;
+        //        mOrder.CUSTOMER_ID = p_Customer_Id;
+        //        mOrder.DOCUMENT_DATE = p_Document_Date;
+        //        mOrder.SALE_ORDER_ID = p_SaleOrder_Id;
+
+        //        if (p_OrderTypeId == Constants.Credit_Order_Id)
+        //        {
+        //            mOrder.NET_AMOUNT = p_Net_Amount;
+        //        }
+        //        else
+        //        {
+        //            mOrder.NET_AMOUNT = 0;
+        //        }
+        //        mOrder.ORDER_STATUS = p_OrderStatus;
+        //        DataTable dt = mOrder.ExecuteTable();
+        //        if (dt.Columns.Count > 1)
+        //        {
+        //            mTransaction.Rollback();
+        //            return dt;
+        //        }
+
+        //        #region Account Posting
+
+        //        LedgerController LController = new LedgerController();
+        //        Configuration.GetAccountHead();
+        //        string VoucherNo = LController.SelectLedgerMaxDocumentId(Constants.Journal_Voucher, p_Distributor_Id);
+
+        //        if (p_OrderTypeId == Constants.Advance_PaymentOrder_id)
+        //        {
+        //            LController.PostingInvoiceAccount(Constants.Journal_Voucher, long.Parse(VoucherNo), long.Parse(Configuration.SaleAccount), p_Distributor_Id, 0, p_Net_Amount, p_Document_Date, "Net Sale Value", DateTime.Now, p_Principal_Id, int.Parse(p_Customer_Id.ToString()), long.Parse(dt.Rows[0][0].ToString()), p_MANUAL_ORDER_ID, Constants.Document_SaleInvoice, p_UserId, mTransaction, mConnection, Constants.Cash_Advance, p_PayeesName);
+        //            LController.PostingInvoiceAccount(Constants.Journal_Voucher, long.Parse(VoucherNo), long.Parse(Configuration.AccountReceivable), p_Distributor_Id, p_Net_Amount, 0, p_Document_Date, "Recevieable from Customer", DateTime.Now, p_Principal_Id, int.Parse(p_Customer_Id.ToString()), long.Parse(dt.Rows[0][0].ToString()), p_MANUAL_ORDER_ID, Constants.Document_SaleInvoice, p_UserId, mTransaction, mConnection, Constants.Cash_Advance, p_PayeesName);
+
+        //        }
+        //        else if (p_OrderTypeId == Constants.Credit_Order_Id)
+        //        {
+
+        //            LController.PostingInvoiceAccount(Constants.Journal_Voucher, long.Parse(VoucherNo), long.Parse(Configuration.AccountReceivable), p_Distributor_Id, p_Net_Amount, 0, p_Document_Date, "Credit Sale Default", DateTime.Now, p_Principal_Id, int.Parse(p_Customer_Id.ToString()), long.Parse(dt.Rows[0][0].ToString()), p_MANUAL_ORDER_ID, Constants.Document_SaleInvoice, p_UserId, mTransaction, mConnection, Constants.CreditSale, p_PayeesName);
+        //            LController.PostingInvoiceAccount(Constants.Journal_Voucher, long.Parse(VoucherNo), long.Parse(Configuration.SaleAccount), p_Distributor_Id, 0, p_Net_Amount, p_Document_Date, "Credit Sale Default", DateTime.Now, p_Principal_Id, int.Parse(p_Customer_Id.ToString()), long.Parse(dt.Rows[0][0].ToString()), p_MANUAL_ORDER_ID, Constants.Document_SaleInvoice, p_UserId, mTransaction, mConnection, Constants.CreditSale, p_PayeesName);
+        //        }
+
+        //        #endregion
+
+        //        SkuController SKUCtl = new SkuController();
+        //        CustomerDataController CustCtl = new CustomerDataController();
+
+        //        DataTable PurchaseSKU = SelectOrderDetail(p_Distributor_Id, p_SaleOrder_Id, Constants.IntNullValue);
+        //        DataTable dtFreeSKU = SelectOrderPromotion(p_Distributor_Id, p_SaleOrder_Id);
+
+        //        DataTable dtAccount = SKUCtl.GetSKUAccountDetail(Constants.IntNullValue);
+        //        DataTable dtChannel = CustCtl.GetChannelAccountDetail(Constants.IntNullValue, p_ChannelType_ID);
+
+        //        DataTable dtVoucher = new DataTable();
+        //        dtVoucher.Columns.Add("Account_Head_Id", typeof(long));
+        //        dtVoucher.Columns.Add("Debit", typeof(decimal));
+        //        dtVoucher.Columns.Add("Credit", typeof(decimal));
+        //        dtVoucher.Columns.Add("Remarks", typeof(string));
+        //        dtVoucher.Columns.Add("Principal_Id", typeof(string));
+        //        foreach (DataRow dr in PurchaseSKU.Rows)
+        //        {                    
+        //            if (dtAccount.Rows.Count > 0)
+        //            {
+        //                DataRow[] foundRows = dtAccount.Select("SKU_ID  = '" + dr["SKU_ID"].ToString() + "'");
+        //                if (foundRows.Length > 0)
+        //                {
+        //                    if (decimal.Parse(dr["QUANTITY_UNIT"].ToString()) * decimal.Parse(dr["DISTRIBUTOR_PRICE"].ToString()) > 0)
+        //                    {
+        //                        DataRow drConsumtion = dtVoucher.NewRow();
+        //                        drConsumtion["ACCOUNT_HEAD_ID"] = foundRows[0]["CONSUMPTION_ID"];
+        //                        drConsumtion["REMARKS"] = "Consumtion";
+        //                        drConsumtion["DEBIT"] = decimal.Parse(dr["QUANTITY_UNIT"].ToString()) * decimal.Parse(dr["DISTRIBUTOR_PRICE"].ToString());
+        //                        drConsumtion["CREDIT"] = 0;
+        //                        drConsumtion["Principal_Id"] = p_Principal_Id;
+        //                        dtVoucher.Rows.Add(drConsumtion);
+        //                    }
+
+        //                    if (decimal.Parse(dr["QUANTITY_UNIT"].ToString()) * decimal.Parse(dr["DISTRIBUTOR_PRICE"].ToString()) > 0)
+        //                    {
+        //                        DataRow drStock = dtVoucher.NewRow();
+        //                        drStock["ACCOUNT_HEAD_ID"] = foundRows[0]["STOCKINHAND_ID"];
+        //                        drStock["REMARKS"] = "Stock In Hand";
+        //                        drStock["DEBIT"] = 0;
+        //                        drStock["CREDIT"] = decimal.Parse(dr["QUANTITY_UNIT"].ToString()) * decimal.Parse(dr["DISTRIBUTOR_PRICE"].ToString());
+        //                        drStock["Principal_Id"] = p_Principal_Id;
+        //                        dtVoucher.Rows.Add(drStock);
+        //                    }
+
+        //                    if (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) + decimal.Parse(dr["EXTRA_DISCOUNT"].ToString()) > 0)
+        //                    {
+        //                        DataRow drDiscount = dtVoucher.NewRow();
+        //                        drDiscount["ACCOUNT_HEAD_ID"] = foundRows[0]["DISCOUNTALLOW_ID"];
+        //                        drDiscount["REMARKS"] = "Discount Allowed";
+        //                        drDiscount["DEBIT"] = decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) + decimal.Parse(dr["EXTRA_DISCOUNT"].ToString());
+        //                        drDiscount["CREDIT"] = 0;
+        //                        drDiscount["Principal_Id"] = p_Principal_Id;
+        //                        dtVoucher.Rows.Add(drDiscount);
+        //                    }
+        //                    if (dtChannel.Rows.Count > 0)
+        //                    {
+        //                        DataRow drParty = dtVoucher.NewRow();
+        //                        if (p_OrderTypeId == Constants.Credit_Order_Id || p_OrderTypeId == Constants.Advance_PaymentOrder_id)
+        //                        {
+        //                            drParty["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CREDIT_HEAD_ID"];
+        //                            drParty["REMARKS"] = "Channel Credit";
+        //                            //GST
+        //                            if (decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString()) > 0)
+        //                            {
+        //                                if (decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString()) > 0)
+        //                                {
+        //                                    //Credit
+        //                                    DataRow drGST = dtVoucher.NewRow();
+        //                                    drGST["ACCOUNT_HEAD_ID"] = foundRows[0]["SALESTAX_ID"];
+        //                                    drGST["REMARKS"] = "Sales Tax";
+        //                                    drGST["DEBIT"] = 0;
+        //                                    drGST["CREDIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
+        //                                    drGST["Principal_Id"] = p_Principal_Id;
+        //                                    dtVoucher.Rows.Add(drGST);
+        //                                }
+
+        //                                if (decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString()) > 0)
+        //                                {
+        //                                    //Debit
+        //                                    DataRow drGST2 = dtVoucher.NewRow();
+        //                                    drGST2["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CREDIT_HEAD_ID"];
+        //                                    drGST2["REMARKS"] = "Channel Debit";
+        //                                    drGST2["DEBIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
+        //                                    drGST2["CREDIT"] = 0;
+        //                                    drGST2["Principal_Id"] = p_Principal_Id;
+        //                                    dtVoucher.Rows.Add(drGST2);
+        //                                }
+        //                            }
+        //                        }
+        //                        else
+        //                        {
+        //                            drParty["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CASH_HEAD_ID"];
+        //                            drParty["REMARKS"] = "Channel Cash";
+
+        //                            //GST
+        //                            if (decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString()) > 0)
+        //                            {
+        //                                //Credit
+        //                                DataRow drGST = dtVoucher.NewRow();
+        //                                drGST["ACCOUNT_HEAD_ID"] = foundRows[0]["SALESTAX_ID"];
+        //                                drGST["REMARKS"] = "Sales Tax";
+        //                                drGST["DEBIT"] = 0;
+        //                                drGST["CREDIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
+        //                                drGST["Principal_Id"] = p_Principal_Id;
+        //                                dtVoucher.Rows.Add(drGST);
+
+        //                                //Debit
+        //                                DataRow drGST2 = dtVoucher.NewRow();
+        //                                drGST2["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CASH_HEAD_ID"];
+        //                                drGST2["REMARKS"] = "Channel Debit";
+        //                                drGST2["DEBIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
+        //                                drGST2["CREDIT"] = 0;
+        //                                drGST2["Principal_Id"] = p_Principal_Id;
+        //                                dtVoucher.Rows.Add(drGST2);
+        //                            }
+        //                        }
+        //                        drParty["DEBIT"] = decimal.Parse(dr["AMOUNT"].ToString()) -
+        //                            (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) +
+        //                            decimal.Parse(dr["EXTRA_DISCOUNT"].ToString())) +
+        //                            decimal.Parse(dr["ADVANCE_TAX"].ToString());
+
+        //                        drParty["CREDIT"] = 0;
+        //                        drParty["Principal_Id"] = p_Principal_Id;
+        //                        dtVoucher.Rows.Add(drParty);
+
+        //                        DataRow drSale = dtVoucher.NewRow();
+        //                        drSale["ACCOUNT_HEAD_ID"] = foundRows[0]["SALE_ID"];
+        //                        drSale["REMARKS"] = "Gross Sale";
+        //                        drSale["DEBIT"] = 0;
+        //                        drSale["CREDIT"] = decimal.Parse(dr["AMOUNT"].ToString());
+        //                        drSale["Principal_Id"] = p_Principal_Id;
+        //                        dtVoucher.Rows.Add(drSale);
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //        //Advance Tax
+        //        if (p_advanceTax > 0)
+        //        {
+        //            //Credit
+        //            DataRow drGST = dtVoucher.NewRow();
+        //            drGST["ACCOUNT_HEAD_ID"] = 1306;
+        //            drGST["REMARKS"] = "Parties W.Tax Deducted US 236 G and H";
+        //            drGST["DEBIT"] = 0;
+        //            drGST["CREDIT"] = p_advanceTax;
+        //            drGST["Principal_Id"] = p_Principal_Id;
+        //            dtVoucher.Rows.Add(drGST);
+        //        }
+
+        //        foreach (DataRow df in dtFreeSKU.Rows)
+        //        {                    
+        //            DataRow[] foundRows = dtAccount.Select("SKU_ID  = '" + df["SKU_ID"].ToString() + "'");
+
+        //            DataRow drScheme = dtVoucher.NewRow();
+        //            drScheme["ACCOUNT_HEAD_ID"] = foundRows[0]["SCHEME_ID"];
+        //            drScheme["REMARKS"] = "Scheme";
+        //            drScheme["DEBIT"] = decimal.Parse(df["QUANTITY"].ToString()) * decimal.Parse(df["DISTRIBUTOR_PRICE"].ToString());
+        //            drScheme["CREDIT"] = 0;
+        //            drScheme["Principal_Id"] = p_Principal_Id;
+        //            dtVoucher.Rows.Add(drScheme);
+
+        //            DataRow drStock = dtVoucher.NewRow();
+        //            drStock["ACCOUNT_HEAD_ID"] = foundRows[0]["STOCKINHAND_ID"];
+        //            drStock["REMARKS"] = "Stock In Hand";
+        //            drStock["DEBIT"] = 0;
+        //            drStock["CREDIT"] = decimal.Parse(df["QUANTITY"].ToString()) * decimal.Parse(df["DISTRIBUTOR_PRICE"].ToString());
+        //            drStock["Principal_Id"] = p_Principal_Id;
+        //            dtVoucher.Rows.Add(drStock);
+        //        }
+
+        //        if (dtVoucher.Rows.Count > 0)
+        //        {
+        //            string MaxDocumentId = LController.SelectMaxVoucherId(Constants.Journal_Voucher, p_Distributor_Id, p_Document_Date);
+
+        //            LController.Add_Voucher2(p_Distributor_Id, 0, MaxDocumentId, Constants.Journal_Voucher, p_Document_Date, Constants.CashPayment, "N/A", "Default Sales Voucher ," + p_SalePerson + " , " + p_Customer_Name + " , " + Convert.ToInt64(dt.Rows[0][0]) + "", Constants.DateNullValue, null, Convert.ToInt64(dt.Rows[0][0]), Constants.Document_SaleInvoice, dtVoucher, p_UserId, null, Constants.DateNullValue);
+        //        }
+
+        //        mTransaction.Commit();
+        //        return dt;
+
+        //    }
+        //    catch (Exception exp)
+        //    {
+        //        ExceptionPublisher.PublishException(exp);
+        //        return null;
+        //    }
+        //    finally
+        //    {
+        //        if (mConnection != null && mConnection.State == ConnectionState.Open)
+        //        {
+        //            mConnection.Close();
+        //        }
+        //    }
+        //}
+
+        /// <summary>
+        /// Accumulates voucher entries by Account_Head_Id, Remarks, and Principal_Id
+        /// </summary>
+
+        public DataTable ConvertOrder_to_Invoice(int p_Distributor_Id, string p_MANUAL_ORDER_ID, long p_Customer_Id, int p_Principal_Id,
+                    long p_SaleOrder_Id, DateTime p_Document_Date, decimal p_GrossSale, decimal p_Discount, decimal p_scheme,
+                    decimal p_GstAmt, decimal p_Net_Amount, int p_OrderStatus, int p_OrderTypeId, int p_UserId,
+                    string p_PayeesName, int p_ChannelType_ID, string p_Customer_Name, string p_SalePerson,
+                    decimal p_advanceTax)
         {
             #region variables
             IDbTransaction mTransaction = null;
@@ -1261,8 +1523,9 @@ namespace SAMSBusinessLayer.Classes
                 dtVoucher.Columns.Add("Credit", typeof(decimal));
                 dtVoucher.Columns.Add("Remarks", typeof(string));
                 dtVoucher.Columns.Add("Principal_Id", typeof(string));
+
                 foreach (DataRow dr in PurchaseSKU.Rows)
-                {                    
+                {
                     if (dtAccount.Rows.Count > 0)
                     {
                         DataRow[] foundRows = dtAccount.Select("SKU_ID  = '" + dr["SKU_ID"].ToString() + "'");
@@ -1300,6 +1563,7 @@ namespace SAMSBusinessLayer.Classes
                                 drDiscount["Principal_Id"] = p_Principal_Id;
                                 dtVoucher.Rows.Add(drDiscount);
                             }
+
                             if (dtChannel.Rows.Count > 0)
                             {
                                 DataRow drParty = dtVoucher.NewRow();
@@ -1307,32 +1571,27 @@ namespace SAMSBusinessLayer.Classes
                                 {
                                     drParty["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CREDIT_HEAD_ID"];
                                     drParty["REMARKS"] = "Channel Credit";
+
                                     //GST
                                     if (decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString()) > 0)
                                     {
-                                        if (decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString()) > 0)
-                                        {
-                                            //Credit
-                                            DataRow drGST = dtVoucher.NewRow();
-                                            drGST["ACCOUNT_HEAD_ID"] = foundRows[0]["SALESTAX_ID"];
-                                            drGST["REMARKS"] = "Sales Tax";
-                                            drGST["DEBIT"] = 0;
-                                            drGST["CREDIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
-                                            drGST["Principal_Id"] = p_Principal_Id;
-                                            dtVoucher.Rows.Add(drGST);
-                                        }
+                                        //Credit
+                                        DataRow drGST = dtVoucher.NewRow();
+                                        drGST["ACCOUNT_HEAD_ID"] = foundRows[0]["SALESTAX_ID"];
+                                        drGST["REMARKS"] = "Sales Tax";
+                                        drGST["DEBIT"] = 0;
+                                        drGST["CREDIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
+                                        drGST["Principal_Id"] = p_Principal_Id;
+                                        dtVoucher.Rows.Add(drGST);
 
-                                        if (decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString()) > 0)
-                                        {
-                                            //Debit
-                                            DataRow drGST2 = dtVoucher.NewRow();
-                                            drGST2["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CREDIT_HEAD_ID"];
-                                            drGST2["REMARKS"] = "Channel Debit";
-                                            drGST2["DEBIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
-                                            drGST2["CREDIT"] = 0;
-                                            drGST2["Principal_Id"] = p_Principal_Id;
-                                            dtVoucher.Rows.Add(drGST2);
-                                        }
+                                        //Debit
+                                        DataRow drGST2 = dtVoucher.NewRow();
+                                        drGST2["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CREDIT_HEAD_ID"];
+                                        drGST2["REMARKS"] = "Channel Debit";
+                                        drGST2["DEBIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
+                                        drGST2["CREDIT"] = 0;
+                                        drGST2["Principal_Id"] = p_Principal_Id;
+                                        dtVoucher.Rows.Add(drGST2);
                                     }
                                 }
                                 else
@@ -1362,6 +1621,7 @@ namespace SAMSBusinessLayer.Classes
                                         dtVoucher.Rows.Add(drGST2);
                                     }
                                 }
+
                                 drParty["DEBIT"] = decimal.Parse(dr["AMOUNT"].ToString()) -
                                     (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) +
                                     decimal.Parse(dr["EXTRA_DISCOUNT"].ToString())) +
@@ -1397,39 +1657,46 @@ namespace SAMSBusinessLayer.Classes
                 }
 
                 foreach (DataRow df in dtFreeSKU.Rows)
-                {                    
+                {
                     DataRow[] foundRows = dtAccount.Select("SKU_ID  = '" + df["SKU_ID"].ToString() + "'");
+                    if (foundRows.Length > 0)
+                    {
+                        DataRow drScheme = dtVoucher.NewRow();
+                        drScheme["ACCOUNT_HEAD_ID"] = foundRows[0]["SCHEME_ID"];
+                        drScheme["REMARKS"] = "Scheme";
+                        drScheme["DEBIT"] = decimal.Parse(df["QUANTITY"].ToString()) * decimal.Parse(df["DISTRIBUTOR_PRICE"].ToString());
+                        drScheme["CREDIT"] = 0;
+                        drScheme["Principal_Id"] = p_Principal_Id;
+                        dtVoucher.Rows.Add(drScheme);
 
-                    DataRow drScheme = dtVoucher.NewRow();
-                    drScheme["ACCOUNT_HEAD_ID"] = foundRows[0]["SCHEME_ID"];
-                    drScheme["REMARKS"] = "Scheme";
-                    drScheme["DEBIT"] = decimal.Parse(df["QUANTITY"].ToString()) * decimal.Parse(df["DISTRIBUTOR_PRICE"].ToString());
-                    drScheme["CREDIT"] = 0;
-                    drScheme["Principal_Id"] = p_Principal_Id;
-                    dtVoucher.Rows.Add(drScheme);
-
-                    DataRow drStock = dtVoucher.NewRow();
-                    drStock["ACCOUNT_HEAD_ID"] = foundRows[0]["STOCKINHAND_ID"];
-                    drStock["REMARKS"] = "Stock In Hand";
-                    drStock["DEBIT"] = 0;
-                    drStock["CREDIT"] = decimal.Parse(df["QUANTITY"].ToString()) * decimal.Parse(df["DISTRIBUTOR_PRICE"].ToString());
-                    drStock["Principal_Id"] = p_Principal_Id;
-                    dtVoucher.Rows.Add(drStock);
+                        DataRow drStock = dtVoucher.NewRow();
+                        drStock["ACCOUNT_HEAD_ID"] = foundRows[0]["STOCKINHAND_ID"];
+                        drStock["REMARKS"] = "Stock In Hand";
+                        drStock["DEBIT"] = 0;
+                        drStock["CREDIT"] = decimal.Parse(df["QUANTITY"].ToString()) * decimal.Parse(df["DISTRIBUTOR_PRICE"].ToString());
+                        drStock["Principal_Id"] = p_Principal_Id;
+                        dtVoucher.Rows.Add(drStock);
+                    }
                 }
 
                 if (dtVoucher.Rows.Count > 0)
                 {
+                    // ***** FIX: Accumulate voucher entries before saving *****
+                    DataTable dtAccumulatedVoucher = AccumulateVoucherEntries(dtVoucher);
+
                     string MaxDocumentId = LController.SelectMaxVoucherId(Constants.Journal_Voucher, p_Distributor_Id, p_Document_Date);
 
-                    LController.Add_Voucher2(p_Distributor_Id, 0, MaxDocumentId, Constants.Journal_Voucher, p_Document_Date, Constants.CashPayment, "N/A", "Default Sales Voucher ," + p_SalePerson + " , " + p_Customer_Name + " , " + Convert.ToInt64(dt.Rows[0][0]) + "", Constants.DateNullValue, null, Convert.ToInt64(dt.Rows[0][0]), Constants.Document_SaleInvoice, dtVoucher, p_UserId, null, Constants.DateNullValue);
+                    LController.Add_Voucher2(p_Distributor_Id, 0, MaxDocumentId, Constants.Journal_Voucher, p_Document_Date, Constants.CashPayment, "N/A", "Default Sales Voucher ," + p_SalePerson + " , " + p_Customer_Name + " , " + Convert.ToInt64(dt.Rows[0][0]) + "", Constants.DateNullValue, null, Convert.ToInt64(dt.Rows[0][0]), Constants.Document_SaleInvoice, dtAccumulatedVoucher, p_UserId, null, Constants.DateNullValue);
                 }
 
                 mTransaction.Commit();
                 return dt;
-
             }
             catch (Exception exp)
             {
+                // ***** FIX: Add null check for transaction *****
+                if (mTransaction != null)
+                    mTransaction.Rollback();
                 ExceptionPublisher.PublishException(exp);
                 return null;
             }
@@ -1441,8 +1708,6 @@ namespace SAMSBusinessLayer.Classes
                 }
             }
         }
-
-        
         /// <summary>
         /// Gets Orders And Invoices Summary
         /// </summary>
@@ -2805,13 +3070,476 @@ namespace SAMSBusinessLayer.Classes
             return true;
         }
 
+        //public long Add_Invoice2(int p_Distributor_id, string p_MANUAL_INVOICE_ID, int p_TOWN_ID, long p_AREA_ID, int p_PRINCIPAL_ID, long p_SOLD_TO, long p_SHIP_TO, int p_ORDERBOOKER_ID, int p_DELIVERYMAN_ID, long p_Orderid,
+        // decimal p_TOTAL_AMOUNT, decimal p_EXTRA_DISCOUNT_AMOUNT, decimal p_STANDARD_DISCOUNT_AMOUNT,
+        // decimal p_GST_AMOUNT, decimal p_TOTAL_NET_AMOUNT, decimal p_SCHEME_AMOUNT, int InvoiceTypeId,
+        // DataTable dtOrderDetail, DataTable dtFreeSKU, int p_UserId, decimal p_CashReceived,
+        // DateTime p_DocumentDate, decimal p_TSTAmount, decimal p_SEDAmount, long p_Vehicle_NO,
+        // int p_ChannelTypeID, string p_Customer_Name, string p_Sale_Person_Name, DateTime p_PO_DATE,
+        // string p_DC_PO_NO, decimal p_advanceTaxPercent, decimal p_advanceTaxAmount)
+        //{
+        //    IDbConnection mConnection = null;
+        //    IDbTransaction mTransaction = null;
+        //    SkuController SKUCtl = new SkuController();
+        //    CustomerDataController CustCtl = new CustomerDataController();
+        //    bool CashReceived = false;
+        //    DataTable dtAccount = SKUCtl.GetSKUAccountDetail(Constants.IntNullValue);
+        //    DataTable dtChannel = CustCtl.GetChannelAccountDetail(Constants.IntNullValue,p_ChannelTypeID);
+
+        //    DataTable dtVoucher = new DataTable();
+        //    dtVoucher.Columns.Add("Account_Head_Id", typeof(long));
+        //    dtVoucher.Columns.Add("Debit", typeof(decimal));
+        //    dtVoucher.Columns.Add("Credit", typeof(decimal));
+        //    dtVoucher.Columns.Add("Remarks", typeof(string));
+        //    dtVoucher.Columns.Add("Principal_Id", typeof(string));
+
+        //    try
+        //    {
+        //        mConnection = ProviderFactory.GetConnection(Configuration.ConnectionString, EnumProviders.SQLClient);
+        //        mConnection.Open();
+        //        mTransaction = ProviderFactory.GetTransaction(mConnection);
+
+        //        spInsertSALE_INVOICE_MASTER mISom = new spInsertSALE_INVOICE_MASTER();
+        //        mISom.Connection = mConnection;
+        //        mISom.Transaction = mTransaction;
+
+        //        //------------Insert into Sale Order Master----------
+
+        //        if (dtOrderDetail.Rows.Count > 0)
+        //        {
+        //            mISom.DISTRIBUTOR_ID = p_Distributor_id;
+        //            mISom.MANUAL_INVOICE_ID = p_MANUAL_INVOICE_ID;
+        //            mISom.PRINCIPAL_ID = p_PRINCIPAL_ID;
+        //            mISom.AREA_ID = p_AREA_ID;
+        //            mISom.DELIVERYMAN_ID = p_DELIVERYMAN_ID;
+        //            mISom.ORDERBOOKER_ID = p_ORDERBOOKER_ID;
+        //            mISom.DOCUMENT_DATE = p_DocumentDate;
+        //            mISom.SOLD_TO = p_SOLD_TO;
+        //            mISom.TOTAL_AMOUNT = p_TOTAL_AMOUNT;
+        //            mISom.EXTRA_DISCOUNT_AMOUNT = p_EXTRA_DISCOUNT_AMOUNT;
+        //            mISom.STANDARD_DISCOUNT_AMOUNT = p_STANDARD_DISCOUNT_AMOUNT;
+        //            mISom.GST_AMOUNT = p_GST_AMOUNT;
+        //            mISom.SCHEME_AMOUNT = p_SCHEME_AMOUNT;
+        //            mISom.IS_DELETED = false;
+        //            mISom.TOTAL_NET_AMOUNT = p_TOTAL_NET_AMOUNT;
+        //            if (InvoiceTypeId == Constants.Credit_Order_Id)
+        //            {
+        //                mISom.CREDIT_AMOUNT = p_TOTAL_NET_AMOUNT - p_CashReceived;
+        //                mISom.CURRENT_CREDIT_AMOUNT = p_TOTAL_NET_AMOUNT - p_CashReceived;
+        //            }
+        //            else
+        //            {
+        //                mISom.CREDIT_AMOUNT = 0;
+        //                mISom.CURRENT_CREDIT_AMOUNT = 0;
+        //            }
+        //            mISom.TOWN_ID = p_TOWN_ID;
+        //            mISom.USER_ID = p_UserId;
+        //            mISom.SALE_ORDER_ID = p_Orderid;
+        //            mISom.TST_AMOUNT = p_TSTAmount;
+        //            mISom.SED_AMOUNT = p_SEDAmount;
+        //            mISom.TIME_STAMP = DateTime.Now;
+        //            mISom.LASTUPDATE_DATE = System.DateTime.Now;
+        //            mISom.VEHICLE_NO = p_Vehicle_NO;
+        //            mISom.IS_DELETED = false;
+        //            mISom.POSTING = 0;
+        //            mISom.PO_DATE = p_PO_DATE;
+        //            mISom.DC_PO_NO = p_DC_PO_NO;
+        //            mISom.ADVANCE_TAX_PERCENT = p_advanceTaxPercent;
+        //            mISom.ADVANCE_TAX = p_advanceTaxAmount;
+        //            mISom.ExecuteQuery();
+
+        //            //----------------Insert into sale order detail-------------
+        //            spInsertSALE_INVOICE_DETAIL mSaleOrderDetail = new spInsertSALE_INVOICE_DETAIL();
+        //            mSaleOrderDetail.Connection = mConnection;
+        //            mSaleOrderDetail.Transaction = mTransaction;
+
+        //            foreach (DataRow dr in dtOrderDetail.Rows)
+        //            {
+        //                mSaleOrderDetail.SALE_INVOICE_ID = mISom.SALE_INVOICE_ID;
+        //                mSaleOrderDetail.DISTRIBUTOR_ID = p_Distributor_id;
+        //                mSaleOrderDetail.SKU_ID = int.Parse(dr["SKU_ID"].ToString());
+        //                mSaleOrderDetail.BATCH_NO = dr["BATCH_NO"].ToString();
+        //                mSaleOrderDetail.QUANTITY_UNIT = int.Parse(dr["QUANTITY_UNIT"].ToString());
+        //                mSaleOrderDetail.UNIT_PRICE = decimal.Parse(dr["UNIT_PRICE"].ToString());
+        //                mSaleOrderDetail.DISTRIBUTOR_PRICE = decimal.Parse(dr["DISTRIBUTOR_PRICE"].ToString());
+        //                mSaleOrderDetail.GST_RATE = float.Parse(dr["GST_RATE"].ToString());
+        //                mSaleOrderDetail.AMOUNT = decimal.Parse(dr["AMOUNT"].ToString());
+        //                mSaleOrderDetail.EXTRA_DISCOUNT = decimal.Parse(dr["EXTRA_DISCOUNT"].ToString());
+        //                mSaleOrderDetail.STANDARD_DISCOUNT = decimal.Parse(dr["STANDARD_DISCOUNT"].ToString());
+        //                mSaleOrderDetail.GST_AMOUNT = decimal.Parse(dr["GST_AMOUNT"].ToString());
+        //                mSaleOrderDetail.TST_AMOUNT = decimal.Parse(dr["GST_AMOUNT2"].ToString());
+        //                mSaleOrderDetail.SED_AMOUNT = decimal.Parse(dr["SED_AMOUNT"].ToString());
+        //                mSaleOrderDetail.NET_AMOUNT = decimal.Parse(dr["NET_AMOUNT"].ToString());
+        //                mSaleOrderDetail.ADVANCE_TAX = decimal.Parse(dr["ADVANCE_TAX"].ToString());
+        //                mSaleOrderDetail.ADVANCE_TAX_PERCENT = decimal.Parse(dr["ADVANCE_TAX_PERCENT"].ToString());
+        //                mSaleOrderDetail.IS_DELETED = false;
+        //                mSaleOrderDetail.TIME_STAMP = p_DocumentDate;
+        //                mSaleOrderDetail.ExecuteQuery();
+
+        //                DataRow[] foundRows = dtAccount.Select("SKU_ID  = '" + dr["SKU_ID"].ToString() + "'");
+
+        //                if (dtAccount.Rows.Count > 0)
+        //                {
+        //                    if (foundRows.Length > 0)
+        //                    {
+        //                        DataRow drConsumtion = dtVoucher.NewRow();
+        //                        drConsumtion["ACCOUNT_HEAD_ID"] = foundRows[0]["CONSUMPTION_ID"];
+        //                        drConsumtion["REMARKS"] = "Consumtion";
+        //                        drConsumtion["DEBIT"] = decimal.Parse(dr["QUANTITY_UNIT"].ToString()) * decimal.Parse(dr["DISTRIBUTOR_PRICE"].ToString());
+        //                        drConsumtion["CREDIT"] = 0;
+        //                        drConsumtion["Principal_Id"] = p_PRINCIPAL_ID;
+        //                        dtVoucher.Rows.Add(drConsumtion);
+
+        //                        DataRow drStock = dtVoucher.NewRow();
+        //                        drStock["ACCOUNT_HEAD_ID"] = foundRows[0]["STOCKINHAND_ID"];
+        //                        drStock["REMARKS"] = "Stock In Hand";
+        //                        drStock["DEBIT"] = 0;
+        //                        drStock["CREDIT"] = decimal.Parse(dr["QUANTITY_UNIT"].ToString()) * decimal.Parse(dr["DISTRIBUTOR_PRICE"].ToString());
+        //                        drStock["Principal_Id"] = p_PRINCIPAL_ID;
+        //                        dtVoucher.Rows.Add(drStock);
+        //                        if (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) + decimal.Parse(dr["EXTRA_DISCOUNT"].ToString()) > 0)
+        //                        {
+        //                            DataRow drDiscount = dtVoucher.NewRow();
+        //                            drDiscount["ACCOUNT_HEAD_ID"] = foundRows[0]["DISCOUNTALLOW_ID"];
+        //                            drDiscount["REMARKS"] = "Discount Allowed";
+        //                            drDiscount["DEBIT"] = decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) + decimal.Parse(dr["EXTRA_DISCOUNT"].ToString());
+        //                            drDiscount["CREDIT"] = 0;
+        //                            drDiscount["Principal_Id"] = p_PRINCIPAL_ID;
+        //                            dtVoucher.Rows.Add(drDiscount);
+        //                        }
+
+        //                        if (dtChannel.Rows.Count > 0)
+        //                        {                                    
+        //                            if (InvoiceTypeId == Constants.Credit_Order_Id || InvoiceTypeId == Constants.Advance_PaymentOrder_id)
+        //                            {
+        //                                if (p_CashReceived > 0)
+        //                                {
+        //                                    if (!CashReceived)
+        //                                    {
+        //                                        DataRow drPartyCash = dtVoucher.NewRow();
+        //                                        drPartyCash["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CASH_HEAD_ID"];
+        //                                        drPartyCash["REMARKS"] = "Channel Cash";
+        //                                        drPartyCash["DEBIT"] = p_CashReceived;
+        //                                        drPartyCash["CREDIT"] = 0;
+        //                                        drPartyCash["Principal_Id"] = p_PRINCIPAL_ID;
+        //                                        dtVoucher.Rows.Add(drPartyCash);
+        //                                        CashReceived = true;
+        //                                    }
+
+        //                                    DataRow drPartyCredit = dtVoucher.NewRow();
+        //                                    drPartyCredit["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CREDIT_HEAD_ID"];
+        //                                    drPartyCredit["REMARKS"] = "Channel Credit";
+        //                                    drPartyCredit["DEBIT"] = decimal.Parse(dr["AMOUNT"].ToString()) - 
+        //                                        (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) +
+        //                                        decimal.Parse(dr["EXTRA_DISCOUNT"].ToString())) -
+        //                                        p_CashReceived + decimal.Parse(dr["ADVANCE_TAX"].ToString());
+        //                                    drPartyCredit["CREDIT"] = 0;
+        //                                    drPartyCredit["Principal_Id"] = p_PRINCIPAL_ID;
+        //                                    dtVoucher.Rows.Add(drPartyCredit);
+
+        //                                }
+        //                                else
+        //                                {
+        //                                    DataRow drParty = dtVoucher.NewRow();
+        //                                    drParty["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CREDIT_HEAD_ID"];
+        //                                    drParty["REMARKS"] = "Channel Credit";
+        //                                    drParty["DEBIT"] = decimal.Parse(dr["AMOUNT"].ToString()) -
+        //                                        (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) + 
+        //                                        decimal.Parse(dr["EXTRA_DISCOUNT"].ToString())) +
+        //                                        decimal.Parse(dr["ADVANCE_TAX"].ToString());
+        //                                    drParty["CREDIT"] = 0;
+        //                                    drParty["Principal_Id"] = p_PRINCIPAL_ID;
+        //                                    dtVoucher.Rows.Add(drParty);
+        //                                }
+
+        //                                //GST
+        //                                if (decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString()) > 0)
+        //                                {
+        //                                    //Credit
+        //                                    DataRow drGST = dtVoucher.NewRow();
+        //                                    drGST["ACCOUNT_HEAD_ID"] = foundRows[0]["SALESTAX_ID"];
+        //                                    drGST["REMARKS"] = "Sales Tax";
+        //                                    drGST["DEBIT"] = 0;
+        //                                    drGST["CREDIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
+        //                                    drGST["Principal_Id"] = p_PRINCIPAL_ID;
+        //                                    dtVoucher.Rows.Add(drGST);
+
+        //                                    //Debit
+        //                                    DataRow drGST2 = dtVoucher.NewRow();
+        //                                    drGST2["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CREDIT_HEAD_ID"]; ;
+        //                                    drGST2["REMARKS"] = "Channel Debit";
+        //                                    drGST2["DEBIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
+        //                                    drGST2["CREDIT"] = 0;
+        //                                    drGST2["Principal_Id"] = p_PRINCIPAL_ID;
+        //                                    dtVoucher.Rows.Add(drGST2);
+        //                                }
+        //                            }
+        //                            else
+        //                            {
+        //                                DataRow drParty = dtVoucher.NewRow();
+        //                                drParty["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CASH_HEAD_ID"];
+        //                                drParty["REMARKS"] = "Channel Cash";
+        //                                drParty["DEBIT"] = decimal.Parse(dr["AMOUNT"].ToString()) - 
+        //                                    (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) +
+        //                                    decimal.Parse(dr["EXTRA_DISCOUNT"].ToString())) 
+        //                                    + decimal.Parse(dr["ADVANCE_TAX"].ToString());
+        //                                drParty["CREDIT"] = 0;
+        //                                drParty["Principal_Id"] = p_PRINCIPAL_ID;
+        //                                dtVoucher.Rows.Add(drParty);
+
+        //                                //GST
+        //                                if (decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString()) > 0)
+        //                                {
+        //                                    //Credit
+        //                                    DataRow drGST = dtVoucher.NewRow();
+        //                                    drGST["ACCOUNT_HEAD_ID"] = foundRows[0]["SALESTAX_ID"];
+        //                                    drGST["REMARKS"] = "Sales Tax";
+        //                                    drGST["DEBIT"] = 0;
+        //                                    drGST["CREDIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
+        //                                    drGST["Principal_Id"] = p_PRINCIPAL_ID;
+        //                                    dtVoucher.Rows.Add(drGST);
+
+        //                                    //Debit
+        //                                    DataRow drGST2 = dtVoucher.NewRow();
+        //                                    drGST2["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CASH_HEAD_ID"]; ;
+        //                                    drGST2["REMARKS"] = "Channel Debit";
+        //                                    drGST2["DEBIT"] = decimal.Parse(dr["GST_AMOUNT"].ToString()) + decimal.Parse(dr["GST_AMOUNT2"].ToString());
+        //                                    drGST2["CREDIT"] = 0;
+        //                                    drGST2["Principal_Id"] = p_PRINCIPAL_ID;
+        //                                    dtVoucher.Rows.Add(drGST2);
+        //                                }
+        //                            }
+
+        //                            DataRow drSale = dtVoucher.NewRow();
+        //                            drSale["ACCOUNT_HEAD_ID"] = foundRows[0]["SALE_ID"];
+        //                            drSale["REMARKS"] = "Gross Sale";
+        //                            drSale["DEBIT"] = 0;
+        //                            drSale["CREDIT"] = decimal.Parse(dr["AMOUNT"].ToString());
+        //                            drSale["Principal_Id"] = p_PRINCIPAL_ID;
+        //                            dtVoucher.Rows.Add(drSale);
+        //                        }
+        //                    }
+        //                }
+
+        //                UspProcessStockRegister mStockUpdate = new UspProcessStockRegister();
+        //                mStockUpdate.Connection = mConnection;
+        //                mStockUpdate.Transaction = mTransaction;
+        //                mStockUpdate.TYPE_ID = Constants.Document_Invoice;
+        //                mStockUpdate.DISTRIBUTOR_ID = p_Distributor_id;
+        //                mStockUpdate.STOCK_DATE = p_DocumentDate;
+        //                mStockUpdate.SKU_ID = mSaleOrderDetail.SKU_ID;
+        //                mStockUpdate.BATCHNO = mSaleOrderDetail.BATCH_NO;
+        //                mStockUpdate.STOCK_QTY = mSaleOrderDetail.QUANTITY_UNIT;
+        //                mStockUpdate.FREE_QTY = 0;
+        //                mStockUpdate.ExecuteQuery();
+        //            }
+
+        //            //Advance Tax
+        //            if (p_advanceTaxAmount > 0)
+        //            {
+        //                //Credit
+        //                DataRow drGST = dtVoucher.NewRow();
+        //                drGST["ACCOUNT_HEAD_ID"] = 1306;
+        //                drGST["REMARKS"] = "Parties W.Tax Deducted US 236 G and H";
+        //                drGST["DEBIT"] = 0;
+        //                drGST["CREDIT"] = p_advanceTaxAmount;
+        //                drGST["Principal_Id"] = p_PRINCIPAL_ID;
+        //                dtVoucher.Rows.Add(drGST);
+        //            }
+
+        //            foreach (DataRow df in dtFreeSKU.Rows)
+        //            {
+        //                //----------------Insert into sale order Promotion-------------
+        //                spInsertSALE_INVOICE_PROMOTION mSaleOrderPromo = new spInsertSALE_INVOICE_PROMOTION();
+        //                mSaleOrderPromo.Connection = mConnection;
+        //                mSaleOrderPromo.Transaction = mTransaction;
+
+        //                mSaleOrderPromo.BASKET_DETAIL_ID = int.Parse(df["BASKET_DETAIL_ID"].ToString());
+        //                mSaleOrderPromo.BASKET_ID = int.Parse(df["BASKET_ID"].ToString());
+        //                mSaleOrderPromo.DISTRIBUTOR_ID = p_Distributor_id;
+        //                mSaleOrderPromo.GST_AMOUNT = decimal.Parse(df["GST_AMOUNT"].ToString());
+        //                mSaleOrderPromo.GST_RATE = float.Parse(df["GST_RATE"].ToString());
+        //                mSaleOrderPromo.PROMOTION_ID = int.Parse(df["PROMOTION_ID"].ToString());
+        //                mSaleOrderPromo.PROMOTION_OFFER_ID = int.Parse(df["PROMOTION_OFFER_ID"].ToString());
+        //                mSaleOrderPromo.QUANTITY = int.Parse(df["Quantity"].ToString());
+        //                mSaleOrderPromo.SKU_ID = int.Parse(df["SKU_ID"].ToString());
+        //                mSaleOrderPromo.UNIT_PRICE = decimal.Parse(df["UNIT_PRICE"].ToString());
+        //                mSaleOrderPromo.DISTRIBUTOR_PRICE = decimal.Parse(df["DISTRIBUTOR_PRICE"].ToString());
+        //                mSaleOrderPromo.TST_AMOUNT = decimal.Parse(df["TST_AMOUNT"].ToString());
+        //                mSaleOrderPromo.SED_AMOUNT = 0;
+        //                mSaleOrderPromo.SALE_INVOICE_ID = mISom.SALE_INVOICE_ID;
+        //                mSaleOrderPromo.AMOUNT = decimal.Parse(df["AMOUNT"].ToString());
+        //                mSaleOrderPromo.ExecuteQuery();
+
+        //                DataRow[] foundRows = dtAccount.Select("SKU_ID  = '" + df["SKU_ID"].ToString() + "'");
+        //                if (foundRows.Length > 0)
+        //                {
+        //                    DataRow drScheme = dtVoucher.NewRow();
+        //                    drScheme["ACCOUNT_HEAD_ID"] = foundRows[0]["SCHEME_ID"];
+        //                    drScheme["REMARKS"] = "Scheme";
+        //                    drScheme["DEBIT"] = decimal.Parse(df["Quantity"].ToString()) * decimal.Parse(df["DISTRIBUTOR_PRICE"].ToString());
+        //                    drScheme["CREDIT"] = 0;
+        //                    drScheme["Principal_Id"] = p_PRINCIPAL_ID;
+        //                    dtVoucher.Rows.Add(drScheme);
+
+        //                    DataRow drStock = dtVoucher.NewRow();
+        //                    drStock["ACCOUNT_HEAD_ID"] = foundRows[0]["STOCKINHAND_ID"];
+        //                    drStock["REMARKS"] = "Stock In Hand";
+        //                    drStock["DEBIT"] = 0;
+        //                    drStock["CREDIT"] = decimal.Parse(df["Quantity"].ToString()) * decimal.Parse(df["DISTRIBUTOR_PRICE"].ToString());
+        //                    drStock["Principal_Id"] = p_PRINCIPAL_ID;
+        //                    dtVoucher.Rows.Add(drStock);
+        //                }
+
+        //                UspProcessStockRegister mStockUpdate = new UspProcessStockRegister();
+        //                mStockUpdate.Connection = mConnection;
+        //                mStockUpdate.Transaction = mTransaction;
+        //                mStockUpdate.TYPE_ID = Constants.Document_Invoice;
+        //                mStockUpdate.DISTRIBUTOR_ID = p_Distributor_id;
+        //                mStockUpdate.STOCK_DATE = p_DocumentDate;
+        //                mStockUpdate.SKU_ID = mSaleOrderPromo.SKU_ID;
+        //                mStockUpdate.BATCHNO = "N/A";
+        //                mStockUpdate.STOCK_QTY = 0;
+        //                mStockUpdate.FREE_QTY = mSaleOrderPromo.QUANTITY;
+        //                mStockUpdate.ExecuteQuery();
+        //            }
+
+        //            #region Account Posting
+        //            LedgerController LController = new LedgerController();
+        //            Configuration.GetAccountHead();
+        //            DistributorController Dcontroller = new DistributorController();
+
+
+        //            string VoucherNo = LController.SelectLedgerMaxDocumentId(Constants.Journal_Voucher, p_Distributor_id);
+        //            bool flag = true;
+        //            bool isinsert = true;
+        //            if (InvoiceTypeId == Constants.Advance_PaymentOrder_id)
+        //            {
+        //                flag = LController.PostingInvoiceAccountNew(Constants.Journal_Voucher, long.Parse(VoucherNo), long.Parse(Configuration.SaleAccount), p_Distributor_id, 0, p_TOTAL_NET_AMOUNT, mISom.DOCUMENT_DATE, "Net Sale Value", DateTime.Now, p_PRINCIPAL_ID, int.Parse(p_SOLD_TO.ToString()), mISom.SALE_INVOICE_ID, mISom.MANUAL_INVOICE_ID, Constants.Document_SaleInvoice, p_UserId, mTransaction, mConnection, Constants.Cash_Advance, p_DELIVERYMAN_ID.ToString());
+        //                if (flag)
+        //                {
+        //                    flag = LController.PostingInvoiceAccountNew(Constants.Journal_Voucher, long.Parse(VoucherNo), long.Parse(Configuration.AccountReceivable), p_Distributor_id, p_TOTAL_NET_AMOUNT, 0, mISom.DOCUMENT_DATE, "Credit Sale Default", DateTime.Now, p_PRINCIPAL_ID, int.Parse(p_SOLD_TO.ToString()), mISom.SALE_INVOICE_ID, mISom.MANUAL_INVOICE_ID, Constants.Document_SaleInvoice, p_UserId, mTransaction, mConnection, Constants.Cash_Advance, p_DELIVERYMAN_ID.ToString());
+        //                }
+
+        //            }
+        //            else if (InvoiceTypeId == Constants.Credit_Order_Id)
+        //            {
+        //                flag = LController.PostingInvoiceAccountNew(Constants.Journal_Voucher, long.Parse(VoucherNo), long.Parse(Configuration.AccountReceivable), p_Distributor_id, p_TOTAL_NET_AMOUNT - p_CashReceived, 0, mISom.DOCUMENT_DATE, "Credit Sale Default", DateTime.Now, p_PRINCIPAL_ID, int.Parse(p_SOLD_TO.ToString()), mISom.SALE_INVOICE_ID, mISom.MANUAL_INVOICE_ID, Constants.Document_SaleInvoice, p_UserId, mTransaction, mConnection, Constants.CreditSale, p_DELIVERYMAN_ID.ToString());
+        //                if (flag)
+        //                {
+        //                    flag = LController.PostingInvoiceAccountNew(Constants.Journal_Voucher, long.Parse(VoucherNo), long.Parse(Configuration.SaleAccount), p_Distributor_id, 0, p_TOTAL_NET_AMOUNT - p_CashReceived, mISom.DOCUMENT_DATE, "Credit Sale Default", DateTime.Now, p_PRINCIPAL_ID, int.Parse(p_SOLD_TO.ToString()), mISom.SALE_INVOICE_ID, mISom.MANUAL_INVOICE_ID, Constants.Document_SaleInvoice, p_UserId, mTransaction, mConnection, Constants.CreditSale, p_DELIVERYMAN_ID.ToString());
+        //                }
+
+        //            }
+        //            #endregion
+
+        //            #region Update Pending Order
+        //            if (flag)
+        //            {
+        //                spUpdateSALE_ORDER_MASTER mOrderUpdate = new spUpdateSALE_ORDER_MASTER();
+        //                mOrderUpdate.Connection = mConnection;
+        //                mOrderUpdate.Transaction = mTransaction;
+        //                mOrderUpdate.DISTRIBUTOR_ID = p_Distributor_id;
+        //                mOrderUpdate.SALE_ORDER_ID = p_Orderid;
+        //                mOrderUpdate.STATUS_ID = Constants.Order_Posted_Id;
+        //                flag = mOrderUpdate.ExecuteQuery();
+        //            }
+        //            #endregion
+
+        //            if (dtVoucher.Rows.Count > 0)
+        //            {
+        //                string MaxDocumentId = LController.SelectMaxVoucherId(Constants.Journal_Voucher, p_Distributor_id, p_DocumentDate,mTransaction ,mConnection);
+
+        //              isinsert=  LController.Add_Voucher2(p_Distributor_id, 0, MaxDocumentId, Constants.Journal_Voucher, p_DocumentDate, Constants.CashPayment, "N/A", "Default Sales Voucher ," + p_Sale_Person_Name + " , " + p_Customer_Name + " , " + mISom.SALE_INVOICE_ID + "", Constants.DateNullValue, null, mISom.SALE_INVOICE_ID, Constants.Document_SaleInvoice, dtVoucher, p_UserId, null, Constants.DateNullValue, mTransaction, mConnection);                      
+        //            }
+        //            if (flag && isinsert)
+        //            {
+        //                mTransaction.Commit();
+        //                return mISom.SALE_INVOICE_ID;
+        //            }
+        //            else
+        //            {
+        //                mTransaction.Rollback();
+        //                return 0;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception exp)
+        //    {
+        //        mTransaction.Rollback();
+        //        ExceptionPublisher.PublishException(exp);
+        //        return 0;// exp.Message;
+        //    }
+        //    finally
+        //    {
+        //        if (mConnection != null && mConnection.State == ConnectionState.Open)
+        //        {
+        //            mConnection.Close();
+        //        }
+        //    }
+        //    return 0;
+        //}
+        private DataTable AccumulateVoucherEntries(DataTable dtVoucher)
+        {
+            if (dtVoucher == null || dtVoucher.Rows.Count == 0)
+                return dtVoucher;
+
+            // Create a NEW DataTable with the same structure (not Clone)
+            DataTable dtAccumulated = new DataTable();
+            foreach (DataColumn col in dtVoucher.Columns)
+            {
+                dtAccumulated.Columns.Add(col.ColumnName, col.DataType);
+            }
+
+            // Use nested loops to accumulate
+            for (int i = 0; i < dtVoucher.Rows.Count; i++)
+            {
+                bool isDuplicate = false;
+
+                string currentAccountHead = dtVoucher.Rows[i]["Account_Head_Id"].ToString();
+                string currentRemarks = dtVoucher.Rows[i]["Remarks"].ToString();
+                string currentPrincipalId = dtVoucher.Rows[i]["Principal_Id"].ToString();
+                decimal currentDebit = Convert.ToDecimal(dtVoucher.Rows[i]["Debit"]);
+                decimal currentCredit = Convert.ToDecimal(dtVoucher.Rows[i]["Credit"]);
+
+                // Check if this row combination already exists in accumulated table
+                foreach (DataRow accumulatedRow in dtAccumulated.Rows)
+                {
+                    if (accumulatedRow["Account_Head_Id"].ToString() == currentAccountHead &&
+                        accumulatedRow["Remarks"].ToString() == currentRemarks &&
+                        accumulatedRow["Principal_Id"].ToString() == currentPrincipalId)
+                    {
+                        // Add to existing row
+                        accumulatedRow["Debit"] = Convert.ToDecimal(accumulatedRow["Debit"]) + currentDebit;
+                        accumulatedRow["Credit"] = Convert.ToDecimal(accumulatedRow["Credit"]) + currentCredit;
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+
+                // If not a duplicate, add new row
+                if (!isDuplicate)
+                {
+                    DataRow newRow = dtAccumulated.NewRow();
+                    newRow["Account_Head_Id"] = currentAccountHead;
+                    newRow["Remarks"] = currentRemarks;
+                    newRow["Debit"] = currentDebit;
+                    newRow["Credit"] = currentCredit;
+                    newRow["Principal_Id"] = currentPrincipalId;
+                    dtAccumulated.Rows.Add(newRow);
+                }
+            }
+
+            return dtAccumulated;
+        }
+
         public long Add_Invoice2(int p_Distributor_id, string p_MANUAL_INVOICE_ID, int p_TOWN_ID, long p_AREA_ID, int p_PRINCIPAL_ID, long p_SOLD_TO, long p_SHIP_TO, int p_ORDERBOOKER_ID, int p_DELIVERYMAN_ID, long p_Orderid,
-         decimal p_TOTAL_AMOUNT, decimal p_EXTRA_DISCOUNT_AMOUNT, decimal p_STANDARD_DISCOUNT_AMOUNT,
-         decimal p_GST_AMOUNT, decimal p_TOTAL_NET_AMOUNT, decimal p_SCHEME_AMOUNT, int InvoiceTypeId,
-         DataTable dtOrderDetail, DataTable dtFreeSKU, int p_UserId, decimal p_CashReceived,
-         DateTime p_DocumentDate, decimal p_TSTAmount, decimal p_SEDAmount, long p_Vehicle_NO,
-         int p_ChannelTypeID, string p_Customer_Name, string p_Sale_Person_Name, DateTime p_PO_DATE,
-         string p_DC_PO_NO, decimal p_advanceTaxPercent, decimal p_advanceTaxAmount)
+                 decimal p_TOTAL_AMOUNT, decimal p_EXTRA_DISCOUNT_AMOUNT, decimal p_STANDARD_DISCOUNT_AMOUNT,
+                 decimal p_GST_AMOUNT, decimal p_TOTAL_NET_AMOUNT, decimal p_SCHEME_AMOUNT, int InvoiceTypeId,
+                 DataTable dtOrderDetail, DataTable dtFreeSKU, int p_UserId, decimal p_CashReceived,
+                 DateTime p_DocumentDate, decimal p_TSTAmount, decimal p_SEDAmount, long p_Vehicle_NO,
+                 int p_ChannelTypeID, string p_Customer_Name, string p_Sale_Person_Name, DateTime p_PO_DATE,
+                 string p_DC_PO_NO, decimal p_advanceTaxPercent, decimal p_advanceTaxAmount)
         {
             IDbConnection mConnection = null;
             IDbTransaction mTransaction = null;
@@ -2819,7 +3547,7 @@ namespace SAMSBusinessLayer.Classes
             CustomerDataController CustCtl = new CustomerDataController();
             bool CashReceived = false;
             DataTable dtAccount = SKUCtl.GetSKUAccountDetail(Constants.IntNullValue);
-            DataTable dtChannel = CustCtl.GetChannelAccountDetail(Constants.IntNullValue,p_ChannelTypeID);
+            DataTable dtChannel = CustCtl.GetChannelAccountDetail(Constants.IntNullValue, p_ChannelTypeID);
 
             DataTable dtVoucher = new DataTable();
             dtVoucher.Columns.Add("Account_Head_Id", typeof(long));
@@ -2932,6 +3660,7 @@ namespace SAMSBusinessLayer.Classes
                                 drStock["CREDIT"] = decimal.Parse(dr["QUANTITY_UNIT"].ToString()) * decimal.Parse(dr["DISTRIBUTOR_PRICE"].ToString());
                                 drStock["Principal_Id"] = p_PRINCIPAL_ID;
                                 dtVoucher.Rows.Add(drStock);
+
                                 if (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) + decimal.Parse(dr["EXTRA_DISCOUNT"].ToString()) > 0)
                                 {
                                     DataRow drDiscount = dtVoucher.NewRow();
@@ -2944,7 +3673,7 @@ namespace SAMSBusinessLayer.Classes
                                 }
 
                                 if (dtChannel.Rows.Count > 0)
-                                {                                    
+                                {
                                     if (InvoiceTypeId == Constants.Credit_Order_Id || InvoiceTypeId == Constants.Advance_PaymentOrder_id)
                                     {
                                         if (p_CashReceived > 0)
@@ -2964,14 +3693,14 @@ namespace SAMSBusinessLayer.Classes
                                             DataRow drPartyCredit = dtVoucher.NewRow();
                                             drPartyCredit["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CREDIT_HEAD_ID"];
                                             drPartyCredit["REMARKS"] = "Channel Credit";
-                                            drPartyCredit["DEBIT"] = decimal.Parse(dr["AMOUNT"].ToString()) - 
+                                            drPartyCredit["DEBIT"] = decimal.Parse(dr["AMOUNT"].ToString()) -
                                                 (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) +
                                                 decimal.Parse(dr["EXTRA_DISCOUNT"].ToString())) -
                                                 p_CashReceived + decimal.Parse(dr["ADVANCE_TAX"].ToString());
                                             drPartyCredit["CREDIT"] = 0;
                                             drPartyCredit["Principal_Id"] = p_PRINCIPAL_ID;
                                             dtVoucher.Rows.Add(drPartyCredit);
-                                            
+
                                         }
                                         else
                                         {
@@ -2979,7 +3708,7 @@ namespace SAMSBusinessLayer.Classes
                                             drParty["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CREDIT_HEAD_ID"];
                                             drParty["REMARKS"] = "Channel Credit";
                                             drParty["DEBIT"] = decimal.Parse(dr["AMOUNT"].ToString()) -
-                                                (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) + 
+                                                (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) +
                                                 decimal.Parse(dr["EXTRA_DISCOUNT"].ToString())) +
                                                 decimal.Parse(dr["ADVANCE_TAX"].ToString());
                                             drParty["CREDIT"] = 0;
@@ -3014,9 +3743,9 @@ namespace SAMSBusinessLayer.Classes
                                         DataRow drParty = dtVoucher.NewRow();
                                         drParty["ACCOUNT_HEAD_ID"] = dtChannel.Rows[0]["CASH_HEAD_ID"];
                                         drParty["REMARKS"] = "Channel Cash";
-                                        drParty["DEBIT"] = decimal.Parse(dr["AMOUNT"].ToString()) - 
+                                        drParty["DEBIT"] = decimal.Parse(dr["AMOUNT"].ToString()) -
                                             (decimal.Parse(dr["STANDARD_DISCOUNT"].ToString()) +
-                                            decimal.Parse(dr["EXTRA_DISCOUNT"].ToString())) 
+                                            decimal.Parse(dr["EXTRA_DISCOUNT"].ToString()))
                                             + decimal.Parse(dr["ADVANCE_TAX"].ToString());
                                         drParty["CREDIT"] = 0;
                                         drParty["Principal_Id"] = p_PRINCIPAL_ID;
@@ -3183,10 +3912,14 @@ namespace SAMSBusinessLayer.Classes
 
                     if (dtVoucher.Rows.Count > 0)
                     {
-                        string MaxDocumentId = LController.SelectMaxVoucherId(Constants.Journal_Voucher, p_Distributor_id, p_DocumentDate,mTransaction ,mConnection);
+                        // *** FIX: Accumulate voucher entries before saving ***
+                        DataTable dtAccumulatedVoucher = AccumulateVoucherEntries(dtVoucher);
 
-                      isinsert=  LController.Add_Voucher2(p_Distributor_id, 0, MaxDocumentId, Constants.Journal_Voucher, p_DocumentDate, Constants.CashPayment, "N/A", "Default Sales Voucher ," + p_Sale_Person_Name + " , " + p_Customer_Name + " , " + mISom.SALE_INVOICE_ID + "", Constants.DateNullValue, null, mISom.SALE_INVOICE_ID, Constants.Document_SaleInvoice, dtVoucher, p_UserId, null, Constants.DateNullValue, mTransaction, mConnection);                      
+                        string MaxDocumentId = LController.SelectMaxVoucherId(Constants.Journal_Voucher, p_Distributor_id, p_DocumentDate, mTransaction, mConnection);
+
+                        isinsert = LController.Add_Voucher2(p_Distributor_id, 0, MaxDocumentId, Constants.Journal_Voucher, p_DocumentDate, Constants.CashPayment, "N/A", "Default Sales Voucher ," + p_Sale_Person_Name + " , " + p_Customer_Name + " , " + mISom.SALE_INVOICE_ID + "", Constants.DateNullValue, null, mISom.SALE_INVOICE_ID, Constants.Document_SaleInvoice, dtAccumulatedVoucher, p_UserId, null, Constants.DateNullValue, mTransaction, mConnection);
                     }
+
                     if (flag && isinsert)
                     {
                         mTransaction.Commit();
@@ -3201,9 +3934,10 @@ namespace SAMSBusinessLayer.Classes
             }
             catch (Exception exp)
             {
-                mTransaction.Rollback();
+                if (mTransaction != null)
+                    mTransaction.Rollback();
                 ExceptionPublisher.PublishException(exp);
-                return 0;// exp.Message;
+                return 0;
             }
             finally
             {
