@@ -1688,7 +1688,7 @@ public partial class Forms_frmOrderEntry : System.Web.UI.Page
                 }
                 else if (foundRows[0]["GST_ON"].ToString().Trim() == "R")
                 {
-                    dr["AMOUNT"] = mTradePrice * decimal.Parse(dr["QUANTITY"].ToString());
+                    dr["AMOUNT"] = mTradePrice * decimal.Parse(dr["QUANTITY_UNIT"].ToString());
                     dr["TST_AMOUNT"] = decimal.Parse(foundRows[0]["GST_RATE_TP"].ToString()) * decimal.Parse(dr["QUANTITY_UNIT"].ToString());
                     dr["GST_RATE"] = 0;
                     dr["GST_RATE2"] = 0;
@@ -1749,7 +1749,7 @@ public partial class Forms_frmOrderEntry : System.Web.UI.Page
             }
             else if (foundRows[0]["GST_ON"].ToString().Trim() == "R")
             {
-                dr["AMOUNT"] = mTradePrice * decimal.Parse(dr["QUANTITY"].ToString());
+                dr["AMOUNT"] = mTradePrice * decimal.Parse(dr["QUANTITY_UNIT"].ToString());
                 dr["TST_AMOUNT"] = decimal.Parse(foundRows[0]["GST_RATE_TP"].ToString()) * decimal.Parse(dr["QUANTITY_UNIT"].ToString());
                 dr["GST_RATE"] = 0;
                 dr["GST_RATE2"] = 0;
