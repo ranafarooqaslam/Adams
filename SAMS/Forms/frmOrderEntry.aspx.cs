@@ -1474,7 +1474,14 @@ public partial class Forms_frmOrderEntry : System.Web.UI.Page
                         decimal TempAmount = decimal.Parse(dc.chkNull_0(dr["AMOUNT"].ToString()));
                         decimal TempDiscount = decimal.Parse(dc.chkNull_0(dr["STANDARD_DISCOUNT"].ToString()));
                         decimal TempExtraDisAmt = decimal.Parse(dc.chkNull_0(dr["EXTRA_DISCOUNT"].ToString()));
-                        dr["GST_AMOUNT"] = (TempAmount - TempDiscount - TempExtraDisAmt) * decimal.Parse(dc.chkNull_0(dr["GST_RATE"].ToString())) / 100;
+                        if (dr["GST_ON"].ToString().Trim() == "R")
+                        {
+                            dr["GST_AMOUNT"] = Convert.ToDecimal((dr["QUANTITY_UNIT"])) * decimal.Parse(dc.chkNull_0(dr["GST_RATE"].ToString()));
+                        }
+                        else
+                        {
+                            dr["GST_AMOUNT"] = (TempAmount - TempDiscount - TempExtraDisAmt) * decimal.Parse(dc.chkNull_0(dr["GST_RATE"].ToString())) / 100;
+                        }
                         dr["GST_AMOUNT2"] = (TempAmount - TempDiscount - TempExtraDisAmt) * decimal.Parse(dc.chkNull_0(dr["GST_RATE2"].ToString())) / 100;
                         dr["NET_AMOUNT"] = (TempAmount - TempDiscount - TempExtraDisAmt) + decimal.Parse(dc.chkNull_0(dr["GST_AMOUNT"].ToString())) + decimal.Parse(dc.chkNull_0(dr["GST_AMOUNT2"].ToString()));
                         ObjTotalGST += decimal.Parse(dc.chkNull_0(dr["GST_AMOUNT"].ToString()));
@@ -1690,9 +1697,9 @@ public partial class Forms_frmOrderEntry : System.Web.UI.Page
                 {
                     dr["AMOUNT"] = mTradePrice * decimal.Parse(dr["QUANTITY_UNIT"].ToString());
                     dr["TST_AMOUNT"] = decimal.Parse(foundRows[0]["GST_RATE_TP"].ToString()) * decimal.Parse(dr["QUANTITY_UNIT"].ToString());
-                    dr["GST_RATE"] = 0;
+                    dr["GST_RATE"] = foundRows[0]["GST_RATE_TP"]; ;
                     dr["GST_RATE2"] = 0;
-                    dr["BATCH_NO"] = "R";
+                    dr["BATCH_NO"] = "R";                    
                 }
                 else
                 {
@@ -1751,7 +1758,7 @@ public partial class Forms_frmOrderEntry : System.Web.UI.Page
             {
                 dr["AMOUNT"] = mTradePrice * decimal.Parse(dr["QUANTITY_UNIT"].ToString());
                 dr["TST_AMOUNT"] = decimal.Parse(foundRows[0]["GST_RATE_TP"].ToString()) * decimal.Parse(dr["QUANTITY_UNIT"].ToString());
-                dr["GST_RATE"] = 0;
+                dr["GST_RATE"] = foundRows[0]["GST_RATE_TP"];
                 dr["GST_RATE2"] = 0;
                 dr["BATCH_NO"] = "R";
             }
